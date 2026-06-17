@@ -6,7 +6,9 @@ YAMZZ MARKET ADMIN.JS
 
 let websiteData = null;
 let editIndex = null;
-
+document.getElementById("searchInput").addEventListener("input", function(){
+    searchProduct(this.value);
+});
 // =========================
 // LOAD DATA
 // =========================
@@ -41,60 +43,45 @@ renderAdminProducts();
 // RENDER PRODUK
 // =========================
 
-function renderAdminProducts(){
+function renderAdminProducts(productList = websiteData.products){
 
-const list =
-document.getElementById(
-    "productList"
-);
-
+const list = document.getElementById("productList");
 list.innerHTML = "";
 
-websiteData.products.forEach(
-(product,index)=>{
+productList.forEach((product, index) => {
 
     list.innerHTML += `
-
     <div class="product-item">
+        <h3>${product.title}</h3>
 
-        <h3>
-            ${product.title}
-        </h3>
+        <p>Rp ${Number(product.price).toLocaleString("id-ID")}</p>
 
-        <p>
-            Rp ${Number(
-            product.price
-            ).toLocaleString("id-ID")}
-        </p>
+        <p>${product.status || "Aktif"}</p>
 
         <div class="actions">
-
-            <button
-            class="edit-btn"
-            onclick="editProduct(${index})">
-
+            <button class="edit-btn" onclick="editProduct(${index})">
                 Edit
-
             </button>
 
-            <button
-            class="delete-btn"
-            onclick="deleteProduct(${index})">
-
+            <button class="delete-btn" onclick="deleteProduct(${index})">
                 Hapus
-
             </button>
-
         </div>
-
     </div>
-
     `;
-
 });
-
 }
 
+function searchProduct(keyword){
+
+const filtered = websiteData.products.filter(item =>
+    item.title.toLowerCase().includes(keyword.toLowerCase()) ||
+    item.description.toLowerCase().includes(keyword.toLowerCase())
+);
+
+renderAdminProducts(filtered);
+
+}
 // =========================
 // SIMPAN SETTING
 // =========================
