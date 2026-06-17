@@ -379,7 +379,7 @@ placeholder="URL Gambar">
 <br><br>
 
 <input
-type="text"
+type="number"
 id="whatsapp"
 class="input"
 placeholder="Nomor WhatsApp">
@@ -415,9 +415,70 @@ class="product-list">
 </div>
 
 </div>
+<div id="editModal">
 
+  <div class="modal-box">
+
+    <h3 style="margin:0 0 15px 0; display:flex; align-items:center; gap:8px;">
+  <i class="fa-solid fa-pen-to-square" style="color:#00e5ff;"></i>
+  Edit Produk
+</h3>
+
+<input id="editTitle" placeholder="Nama Produk"
+style="width:100%; margin-bottom:10px; padding:10px;
+border:none; border-radius:8px;
+background:#111; color:#fff; outline:none;">
+
+<input id="editDesc" placeholder="Deskripsi"
+style="width:100%; margin-bottom:10px; padding:10px;
+border:none; border-radius:8px;
+background:#111; color:#fff; outline:none;">
+
+<input type="number" id="editPrice" placeholder="Harga"
+style="width:100%; margin-bottom:10px; padding:10px;
+border:none; border-radius:8px;
+background:#111; color:#fff; outline:none;">
+
+<input id="editImage" placeholder="URL Gambar"
+style="width:100%; margin-bottom:12px; padding:10px;
+border:none; border-radius:8px;
+background:#111; color:#fff; outline:none;">
+
+<button onclick="saveEdit()"
+style="
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+background:linear-gradient(90deg,#00ff99,#00e5ff);
+color:#000;
+font-weight:bold;
+cursor:pointer;
+margin-bottom:8px;
+box-shadow:0 0 10px rgba(0,255,200,0.3);
+">
+Simpan Perubahan
+</button>
+
+<button onclick="closeModal()"
+style="
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+background:#ff3b3b;
+color:#fff;
+font-weight:bold;
+cursor:pointer;
+">
+Batal
+</button>
+
+  </div>
+
+</div>
 <script src="js/jsonbin.js"></script>
 <script src="js/admin.js"></script>
 
 </body>
-</html>
+    </html>
