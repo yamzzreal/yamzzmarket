@@ -113,6 +113,11 @@ window.addEventListener(
 loadWebsite
 );
 
+function renderStatus(status) {
+    return status === "sold"
+        ? `<span style="color:red;font-weight:bold;">SOLD</span>`
+        : `<span style="color:lime;font-weight:bold;">READY</span>`;
+}
 // =========================
 // RENDER PRODUK
 // =========================
@@ -147,7 +152,7 @@ products.forEach(product => {
         </span>
 
         <span class="badge-ready">
-            ● Ready
+            ${product.status}
         </span>
 
     </div>
@@ -219,7 +224,7 @@ if(!data) return;
 const products =
 data.products.filter(item =>
 
-    item.title
+    item.description
     .toLowerCase()
     .includes(
         keyword.toLowerCase()
