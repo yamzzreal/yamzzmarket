@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Detail Produk</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+<style>
+
+.detail-container{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:30px 20px;
+
+}
+
+.detail-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    500px 1fr;
+
+    gap:30px;
+
+}
+
+.detail-image{
+
+    width:100%;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+}
+
+.detail-image img{
+
+    width:100%;
+
+    display:block;
+
+}
+
+.detail-info{
+
+    background:var(--card);
+
+    padding:25px;
+
+    border-radius:25px;
+
+}
+
+.detail-title{
+
+    font-size:40px;
+
+    font-weight:800;
+
+}
+
+.detail-price{
+
+    font-size:35px;
+
+    color:#ff5ab3;
+
+    margin:15px 0;
+
+}
+
+.detail-desc{
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+}
+
+.buy-btn{
+
+    margin-top:25px;
+
+}
+
+@media(max-width:900px){
+
+.detail-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+.detail-title{
+
+    font-size:28px;
+
+}
+
+}
+
+</style>
+
+</head>
+<body>
+
+<nav class="navbar">
+
+<div class="logo">
+
+<div class="logo-icon"></div>
+
+<h2>Yamzz Market</h2>
+
+</div>
+
+</nav>
+
+<div class="detail-container">
+
+<div
+class="detail-grid"
+id="detailContainer">
+
+Loading...
+
+</div>
+
+</div>
+
+<script src="js/jsonbin.js"></script>
+
+<script>
+
+async function loadDetail(){
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const id =
+params.get("id");
+
+const data =
+await getData();
+
+if(!data) return;
+
+const product =
+data.products.find(
+p => String(p.id) === id
+);
+
+if(!product){
+
+document
+.getElementById(
+"detailContainer"
+)
+.innerHTML =
+"<h2>Produk tidak ditemukan</h2>";
+
+return;
+
+}
+
+document
+.getElementById(
+"detailContainer"
+)
+.innerHTML = `
+
+<div class="detail-image">
+
+<img
+src="${product.image}">
+
+</div>
+
+<div class="detail-info">
+
+<h1 class="detail-title">
+
+${product.title}
+
+</h1>
+
+<div class="detail-price">
+
+Rp ${Number(
+product.price
+).toLocaleString("id-ID")}
+
+</div>
+
+<div class="detail-desc">
+
+${product.description}
+
+</div>
+
+<button
+class="buy-btn"
+onclick="
+window.open(
+'https://wa.me/${product.whatsapp}'
+)
+">
+
+Beli Sekarang
+
+</button>
+
+</div>
+
+`;
+
+}
+
+loadDetail();
+
+</script>
+
+</body>
+</html>

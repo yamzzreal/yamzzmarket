@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yamzz Market</title><link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+ <nav class="navbar">
+
+    <div class="logo">
+
+    <img
+        src="assets/logo.png"
+        alt="Preview"
+        class="hero-preview">
+
+        <h2 id="site-name">
+            Yamzz Market
+        </h2>
+
+    </div>
+
+    <div class="nav-actions">
+
+<button
+class="theme-btn"
+onclick="toggleTheme()"
+id="themeBtn">
+
+🌙
+
+</button>
+
+        <button
+        class="menu-btn"
+        onclick="toggleMenu()">
+
+            ☰
+
+        </button>
+
+    </div>
+
+</nav>
+
+<div
+id="mobileMenu"
+class="mobile-menu">
+
+    <a href="#home">
+        Home
+    </a>
+
+    <a href="#products">
+        Produk
+    </a>
+
+    <a
+    id="groupLink"
+    href="https://linktr.ee/yamzzmarket">
+        Cek Keaslian
+    </a>
+
+</div>
+<section class="hero" id="home"><div class="hero-content">
+
+    <div class="hero-left">
+
+        <span class="hero-badge">
+            TRUSTED GAME MARKETPLACE
+        </span>
+
+        <h1>
+            Beli Akun Game Aman & Terpercaya
+        </h1>
+
+        <p>
+            Jual beli akun game aman, cepat, dan terpercaya dengan berbagai pilihan akun terbaik.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#products" class="btn btn-primary">
+                Lihat Produk
+            </a>
+
+            <a href="https://linktr.ee/yamzzmarket" id="groupBtn" class="btn btn-outline">
+                Kontak Admin
+            </a>
+
+        </div>
+
+    </div>
+
+<div class="hero-right">
+
+    <div class="dashboard-card">
+
+        <img
+        src="assets/logo.png"
+        alt="Preview"
+        class="hero-preview">
+      <div class="dashboard-stats">
+
+                <div>
+                    <h4>5000+</h4>
+                    <span>Transaksi</span>
+                </div>
+
+                <div>
+                    <h4>99%</h4>
+                    <span>Kepuasan</span>
+                </div>
+
+                <div>
+                    <h4>24/7</h4>
+                    <span>Support</span>
+                </div>
+
+            </div>
+    </div>
+
+</div>
+
+</div>
+
+</section><section class="section"><h2 class="section-title">
+    Kenapa Memilih Kami?
+</h2>
+
+<div class="features">
+
+    <div class="feature-card">
+        <h3>⚡ Fast Response</h3>
+        <p>Admin aktif dan respons cepat.</p>
+    </div>
+
+    <div class="feature-card">
+        <h3>🔒 Aman</h3>
+        <p>Transaksi aman dan terpercaya.</p>
+    </div>
+
+    <div class="feature-card">
+        <h3>⭐ Trusted</h3>
+        <p>Sudah melayani banyak pelanggan.</p>
+    </div>
+
+</div>
+
+</section><section class="section"><h2 class="section-title">
+    Produk Terbaru
+</h2>
+
+<input
+type="text"
+class="search"
+placeholder="Cari produk...">
+
+<div id="products" class="products">
+
+    <div class="loading-card"></div>
+    <div class="loading-card"></div>
+    <div class="loading-card"></div>
+
+</div>
+
+</section>
+<footer>
+    © 2026 Yamzz Market
+</footer>
+<script src="js/jsonbin.js"></script>
+<script>
+function toggleMenu(){
+
+document
+.getElementById(
+"mobileMenu"
+)
+.classList.toggle(
+"show"
+);
+
+}
+function toggleTheme(){
+
+    const body =
+    document.body;
+
+    body.classList.toggle(
+    "light-mode"
+    );
+
+    const isLight =
+    body.classList.contains(
+    "light-mode"
+    );
+
+    document.getElementById(
+    "themeBtn"
+    ).innerHTML =
+    isLight ? "☀️" : "🌙";
+
+    localStorage.setItem(
+    "yamzz_theme",
+    isLight ? "light" : "dark"
+    );
+
+}
+
+window.addEventListener(
+"load",
+()=>{
+
+    const saved =
+    localStorage.getItem(
+    "yamzz_theme"
+    );
+
+    if(saved==="light"){
+
+        document.body
+        .classList.add(
+        "light-mode"
+        );
+
+        document.getElementById(
+        "themeBtn"
+        ).innerHTML =
+        "☀️";
+
+    }
+
+});
+
+</script>
+</body>
+</html>

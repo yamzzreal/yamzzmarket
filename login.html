@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login Admin - Yamzz Market</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    linear-gradient(
+    180deg,
+    #061226,
+    #0b1e3f
+    );
+
+}
+
+.login-box{
+
+    width:100%;
+    max-width:420px;
+
+    padding:35px;
+
+    border-radius:30px;
+
+    background:
+    linear-gradient(
+    180deg,
+    #08173a,
+    #06102a
+    );
+
+    border:1px solid
+    rgba(255,255,255,.08);
+
+    box-shadow:
+    0 20px 60px
+    rgba(0,0,0,.35);
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:25px;
+
+}
+
+.logo-icon{
+
+    width:65px;
+    height:65px;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #4cc9ff,
+    #77e0ff
+    );
+
+}
+
+.logo-text h2{
+
+    font-size:30px;
+
+}
+
+.logo-text p{
+
+    color:#a8b7d1;
+
+}
+
+.input{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:#102347;
+
+    color:white;
+
+    outline:none;
+
+}
+
+.login-btn{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:#4cc9ff;
+
+    color:#001321;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    margin-top:15px;
+
+}
+
+.login-btn:hover{
+
+    opacity:.9;
+
+}
+
+.error{
+
+    display:none;
+
+    margin-bottom:15px;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    background:
+    rgba(255,80,80,.15);
+
+    color:#ff8080;
+
+}
+
+.footer{
+
+    margin-top:20px;
+
+    text-align:center;
+
+    color:#a8b7d1;
+
+    font-size:14px;
+
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="login-box">
+
+    <div class="logo">
+
+        <div class="logo-icon"></div>
+
+        <div class="logo-text">
+
+            <h2>Yamzz Market</h2>
+
+            <p>Admin Panel Login</p>
+
+        </div>
+
+    </div>
+
+    <div
+    id="errorBox"
+    class="error">
+
+        Username atau Password salah
+
+    </div>
+
+    <input
+    type="text"
+    id="username"
+    class="input"
+    placeholder="Username">
+
+    <br><br>
+
+    <input
+    type="password"
+    id="password"
+    class="input"
+    placeholder="Password">
+
+    <button
+    class="login-btn"
+    onclick="login()">
+
+        Login
+
+    </button>
+
+    <div class="footer">
+
+        © 2026 Yamzz Market
+
+    </div>
+
+</div>
+
+<script src="js/jsonbin.js"></script>
+
+<script>
+
+async function login(){
+
+    const username =
+    document.getElementById(
+    "username"
+    ).value;
+
+    const password =
+    document.getElementById(
+    "password"
+    ).value;
+
+    const data =
+    await getData();
+
+    if(!data){
+
+        alert(
+        "Gagal mengambil data"
+        );
+
+        return;
+
+    }
+
+    if(
+
+        username ===
+        data.settings.admin.username
+
+        &&
+
+        password ===
+        data.settings.admin.password
+
+    ){
+
+        localStorage.setItem(
+        "yamzz_admin",
+        "true"
+        );
+
+        window.location.href =
+        "admin.html";
+
+    }else{
+
+        document.getElementById(
+        "errorBox"
+        ).style.display =
+        "block";
+
+    }
+
+}
+
+document.addEventListener(
+"keydown",
+(e)=>{
+
+if(e.key==="Enter"){
+
+login();
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
