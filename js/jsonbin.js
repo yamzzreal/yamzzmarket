@@ -228,8 +228,12 @@ data.products.filter(item =>
     .toLowerCase()
     .includes(
         keyword.toLowerCase()
+    ) ||
+    item.price
+    .toLowerCase()
+    .includes(
+        keyword.toLowerCase()
     )
-
 );
 
 renderProducts(products);
