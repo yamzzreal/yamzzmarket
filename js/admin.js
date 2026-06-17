@@ -245,7 +245,7 @@ document.getElementById("editTitle").value = product.title;
 document.getElementById("editDesc").value = product.description;
 document.getElementById("editPrice").value = product.price;
 document.getElementById("editImage").value = product.image;
-
+document.getElementById("editStatus").value = product.status;
 const modal = document.getElementById("editModal");
 modal.style.display = "flex";
 
@@ -268,7 +268,8 @@ websiteData.products[editIndex] = {
     title: document.getElementById("editTitle").value,
     description: document.getElementById("editDesc").value,
     price: document.getElementById("editPrice").value,
-    image: document.getElementById("editImage").value
+    image: document.getElementById("editImage").value,
+    status: document.getElementById("editStatus").value
 
 };
 
