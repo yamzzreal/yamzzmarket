@@ -99,6 +99,58 @@ color:var(--text);
 }
 
 /* HERO */
+.product-image{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:20px;
+
+}
+
+.product-image img{
+
+    width:100%;
+
+    display:block;
+
+}
+
+.share-icon{
+
+    position:absolute;
+
+    top:12px;
+
+    right:12px;
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:
+    rgba(0,0,0,.6);
+
+    backdrop-filter:blur(10px);
+
+    color:#fff;
+
+    cursor:pointer;
+
+    z-index:10;
+
+}
+
+.share-icon:hover{
+
+    transform:scale(1.1);
+
+}
 
 .hero{
 
