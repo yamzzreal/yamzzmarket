@@ -179,11 +179,13 @@ products.forEach(product => {
 
     <div class="product-buttons">
 
-        <button
+         <button
         class="buy-btn"
         onclick="
         window.open(
-        'https://wa.me/${product.whatsapp}?text=Hallo mas yamzz saya mau beli akun ${product.title}'
+        'https://wa.me/${product.whatsapp}?text=Hallo mas yamzz saya mau beli akun ${product.title} spek ${product.description} harga Rp ${Number(
+        product.price
+        ).toLocaleString("id-ID")}'
         )">
 
         Beli
