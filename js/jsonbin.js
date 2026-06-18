@@ -119,6 +119,49 @@ function renderStatus(status) {
         : `<span style="color:lime;font-weight:bold;">READY</span>`;
 }
 // =========================
+// FUNCTION BUTTON
+function buyProduct(id){
+
+    getData().then(data => {
+
+        const product =
+        data.products.find(
+        p => String(p.id) === String(id)
+        );
+
+        if(!product) return;
+
+        const detailLink =
+        `${location.origin}/detail.html?id=${product.id}`;
+
+        const message =
+
+`Halo mas Yamzz 👋
+
+Saya ingin membeli akun berikut:
+
+📌 Nama :
+${product.title}
+
+💰 Harga :
+Rp ${Number(product.price).toLocaleString("id-ID")}
+
+📝 Spek :
+${product.description}
+
+🔗 Link Produk :
+${detailLink}
+
+Mohon info ketersediaannya ya 🙏`;
+
+        window.open(
+        `https://wa.me/${product.whatsapp}?text=${encodeURIComponent(message)}`
+        );
+
+    });
+
+}
+// =========================
 // RENDER PRODUK
 // =========================
 
@@ -180,17 +223,12 @@ products.forEach(product => {
     <div class="product-buttons">
 
          <button
-        class="buy-btn"
-        onclick="
-        window.open(
-        'https://wa.me/${product.whatsapp}?text=Hallo mas yamzz saya mau beli akun ${product.title} spek ${product.description} harga Rp ${Number(
-        product.price
-        ).toLocaleString("id-ID")}'
-        )">
+class="buy-btn"
+onclick="buyProduct('${product.id}')">
 
-        Beli
+Beli
 
-        </button>
+</button>
 
         <button
 class="detail-btn"
