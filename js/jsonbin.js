@@ -118,8 +118,9 @@ function renderStatus(status) {
         ? `<span style="color:red;font-weight:bold;">SOLD</span>`
         : `<span style="color:lime;font-weight:bold;">READY</span>`;
 }
-// =========================
-// FUNCTION BUTTON
+// ====================
+// FUNCTION buy-btn
+
 function buyProduct(id){
 
     getData().then(data => {
@@ -161,6 +162,52 @@ Mohon info ketersediaannya ya 🙏`;
     });
 
 }
+
+async function shareProduct(id){
+
+    const data =
+    await getData();
+
+    const product =
+    data.products.find(
+    p => String(p.id) === String(id)
+    );
+
+    if(!product) return;
+
+    const link =
+    `https://www.yamzzoffc.my.id/detail.html?id=${product.id}`;
+
+    const text =
+
+`🔥 ${product.title}
+
+💰 Rp ${Number(product.price)
+.toLocaleString("id-ID")}
+
+📝 ${product.description}
+
+🔗 ${link}`;
+
+    if(navigator.share){
+
+        navigator.share({
+
+            title: product.title,
+            text: text,
+            url: link
+
+        });
+
+    }else{
+
+        navigator.clipboard.writeText(link);
+
+        alert("Link produk berhasil disalin");
+
+    }
+
+}
 // =========================
 // RENDER PRODUK
 // =========================
@@ -185,6 +232,14 @@ products.forEach(product => {
         <img
         src="${product.image}"
         alt="${product.title}">
+
+        <button
+        class="share-icon"
+        onclick="shareProduct('${product.id}')">
+
+            <i class="fa-solid fa-share"></i>
+
+        </button>
 
     </div>
 
@@ -222,24 +277,24 @@ products.forEach(product => {
 
     <div class="product-buttons">
 
-         <button
-class="buy-btn"
-onclick="buyProduct('${product.id}')">
+        <button
+        class="buy-btn"
+        onclick="buyProduct('${product.id}')">
 
-Beli
+            Beli
 
-</button>
+        </button>
 
         <button
-class="detail-btn"
-onclick="
-window.location.href=
-'detail.html?id=${product.id}'
-">
+        class="detail-btn"
+        onclick="
+        window.location.href=
+        'detail.html?id=${product.id}'
+        ">
 
-Detail
+            Detail
 
-</button>
+        </button>
 
     </div>
 
