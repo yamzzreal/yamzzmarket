@@ -552,7 +552,7 @@ Simpan Pengaturan
 
 <!-- Tambah Produk -->
 
-<div id="produk" class="admin-card">
+<div class="admin-card">
 <h2>Tambah Produk</h2>
 
 <br>
@@ -582,10 +582,10 @@ placeholder="Harga">
 <br><br>
 
 <input
-type="text"
-id="image"
+type="file"
+id="imageFile"
 class="input"
-placeholder="URL Gambar">
+accept="image/*">
 
 <br><br>
 
@@ -610,7 +610,7 @@ Tambah Produk
 <!-- Tambah Testimoni -->
 <!-- Kelola Testimoni -->
 
-<div id="testimoni" class="admin-card">
+<div class="admin-card">
 <h2>Kelola Testimoni</h2>
 
     <br>
@@ -631,11 +631,11 @@ Tambah Produk
 
     <br><br>
 
-    <input
-    type="text"
-    id="testiImage"
-    class="input"
-    placeholder="URL Gambar">
+<input
+type="file"
+id="testiImageFile"
+class="input"
+accept="image/*">
 
     <br><br>
 
@@ -649,12 +649,11 @@ Tambah Produk
 
     <br><br>
 
-    <div id="testimoniList"></div>
-
 </div>
+
 <!-- Daftar Produk -->
 
-<div class="admin-card">
+<div id="produk" class="admin-card">
 
 <section class="section"><h2 class="section-title">
     Produk Terbaru
@@ -678,7 +677,17 @@ placeholder="Masukkan Spek...">
 </section>
 
 </div>
-
+<div id="testimoni" class="admin-card">
+  <section class="section"><h2 class="section-title">
+    Testimoni Terbaru
+  </h2>
+      <div id="testimoniList">
+    <div class="loading-card"></div>
+    <div class="loading-card"></div>
+    <div class="loading-card"></div>        
+      </div>
+  </section>
+</div>
 </div>
 <div id="editModal">
 
@@ -703,10 +712,11 @@ style="width:100%; margin-bottom:10px; padding:10px;
 border:none; border-radius:8px;
 background:#111; color:#fff; outline:none;">
 
-<input id="editImage" placeholder="URL Gambar"
-style="width:100%; margin-bottom:12px; padding:10px;
-border:none; border-radius:8px;
-background:#111; color:#fff; outline:none;">
+<input
+type="file"
+id="editImageFile"
+class="input"
+accept="image/*">
 
 <select id="editStatus"
 style="width:100%; margin-bottom:12px; padding:10px;
@@ -770,9 +780,10 @@ Batal
     <br><br>
 
     <input
-    id="editTestiImage"
-    class="input"
-    placeholder="URL Gambar">
+type="file"
+id="editTestiImageFile"
+class="input"
+accept="image/*">
 
     <br><br>
 
