@@ -115,6 +115,45 @@ updateDashboard();
 
 }
 
+async function uploadToCloudinary(file){
+
+    try{
+
+        const formData = new FormData();
+
+        formData.append("file", file);
+        formData.append("upload_preset", "yamzzmarket");
+
+        const res = await fetch(
+            "https://api.cloudinary.com/v1_1/dlutuixsc/image/upload",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        const data = await res.json();
+
+        console.log(data);
+
+if(data.error){
+    alert(data.error.message);
+    return null;
+}
+
+        return data.secure_url;
+
+    }catch(err){
+
+        console.error(err);
+
+        alert("Upload gagal: " + err.message);
+
+        return null;
+
+    }
+
+}
 // =========================
 // RENDER PRODUK
 // =========================
@@ -256,10 +295,33 @@ document.getElementById(
 "price"
 ).value;
 
-const image =
+const file =
 document.getElementById(
-"image"
-).value;
+"imageFile"
+).files[0];
+
+if(!file){
+alert("Pilih gambar");
+return;
+}
+
+let image;
+
+try{
+
+    image =
+    await uploadToCloudinary(file);
+
+    if(!image){
+        throw new Error("Upload gagal");
+    }
+
+}catch(err){
+
+    alert("Upload gambar gagal");
+    return;
+
+}
 
 if(
     !title ||
@@ -274,22 +336,13 @@ if(
 }
 
 websiteData.products.push({
-
-    id: Date.now(),
-
-    title,
-
-    description,
-
-    price,
-
-    image,
-
-    status:"READY",
-
-    whatsapp:
-    websiteData.settings.whatsapp
-
+id:Date.now(),
+title,
+description,
+price,
+image, // URL dari Catbox
+status:"READY",
+whatsapp:websiteData.settings.whatsapp
 });
 
 await saveData(
@@ -309,7 +362,7 @@ document.getElementById(
 ).value = "";
 
 document.getElementById(
-"image"
+"imageFile"
 ).value = "";
 
 renderAdminProducts();
@@ -364,7 +417,6 @@ const product = websiteData.products[index];
 document.getElementById("editTitle").value = product.title;
 document.getElementById("editDesc").value = product.description;
 document.getElementById("editPrice").value = product.price;
-document.getElementById("editImage").value = product.image;
 document.getElementById("editStatus").value = product.status;
 const modal = document.getElementById("editModal");
 modal.style.display = "flex";
@@ -379,48 +431,63 @@ setTimeout(()=>{
 function renderTestimonials(){
 
 const container =
-document.getElementById(
-"testimoniList"
-);
+document.getElementById("testimoniList");
 
 if(!container) return;
 
 container.innerHTML = "";
 
-const testimonials =
-websiteData.testimonials || [];
+const testimonials = websiteData.testimonials || [];
 
 testimonials.forEach((item,index)=>{
 
 container.innerHTML += `
 
-<div class="testi-item">
+<div class="product">
 
-<img src="${item.image}">
+    <div class="product-image">
 
-<h3>${item.title}</h3>
+        <img src="${item.image}" alt="${item.title}">
 
-<p>${item.desc}</p>
+    </div>
 
-<div class="actions">
+    <div class="product-top">
 
-<button
-class="edit-btn"
-onclick="editTestimonial(${index})">
+        <span class="badge-game">
+            TESTIMONI
+        </span>
 
-Edit
+        <span class="badge-ready">
+            REAL
+        </span>
 
-</button>
+    </div>
 
-<button
-class="delete-btn"
-onclick="deleteTestimonial(${index})">
+    <div class="product-title">
+        ${item.title}
+    </div>
 
-Hapus
+    <div class="price-label">
+        DESKRIPSI
+    </div>
 
-</button>
+    <div class="price" style="font-size:14px;">
+        ${item.desc}
+    </div>
 
-</div>
+    <div class="product-buttons">
+
+        <button class="buy-btn"
+        onclick="editTestimonial(${index})">
+            Edit
+        </button>
+
+        <button class="detail-btn"
+        onclick="deleteTestimonial(${index})">
+            Hapus
+        </button>
+
+    </div>
 
 </div>
 
@@ -442,10 +509,33 @@ document.getElementById(
 "testiDesc"
 ).value;
 
-const image =
+const file =
 document.getElementById(
-"testiImage"
-).value;
+"testiImageFile"
+).files[0];
+
+if(!file){
+    alert("Pilih gambar");
+    return;
+}
+
+let image;
+
+try{
+
+    image =
+    await uploadToCloudinary(file);
+
+    if(!image){
+        throw new Error("Upload gagal");
+    }
+
+}catch(err){
+
+    alert("Upload gambar gagal");
+    return;
+
+}
 
 if(
 !title ||
@@ -489,7 +579,7 @@ document.getElementById(
 ).value="";
 
 document.getElementById(
-"testiImage"
+"testiImageFile"
 ).value="";
 
 alert(
@@ -520,6 +610,66 @@ updateDashboard();
 
 }
 
+async function saveTestimonialEdit(){
+
+const file =
+document.getElementById(
+"editTestiImageFile"
+).files[0];
+
+let image =
+websiteData.testimonials[
+editTestiIndex
+].image;
+
+if(file){
+    try{
+        image = await uploadToCloudinary(file);
+
+        if(!image){
+            throw new Error("Upload gagal");
+        }
+    }catch(err){
+        alert("Upload gambar gagal");
+        return;
+    }
+}
+
+websiteData.testimonials[
+editTestiIndex
+] = {
+
+...websiteData.testimonials[
+editTestiIndex
+],
+
+title:
+document.getElementById(
+"editTestiTitle"
+).value,
+
+desc:
+document.getElementById(
+"editTestiDesc"
+).value,
+
+image:image
+
+};
+
+await saveData(
+websiteData
+);
+
+renderTestimonials();
+
+closeTestimonialModal();
+
+alert(
+"Testimoni berhasil diperbarui"
+);
+
+}
 function editTestimonial(index){
 
 editTestiIndex = index;
@@ -534,10 +684,6 @@ document.getElementById(
 document.getElementById(
 "editTestiDesc"
 ).value = item.desc;
-
-document.getElementById(
-"editTestiImage"
-).value = item.image;
 
 const modal =
 document.getElementById(
@@ -558,48 +704,6 @@ renderTestimonials();
 
 updateDashboard();
 }
-
-async function saveTestimonialEdit(){
-
-websiteData.testimonials[
-editTestiIndex
-] = {
-
-...websiteData.testimonials[
-editTestiIndex
-],
-
-title:
-document.getElementById(
-"editTestiTitle"
-).value,
-
-desc:
-document.getElementById(
-"editTestiDesc"
-).value,
-
-image:
-document.getElementById(
-"editTestiImage"
-).value
-
-};
-
-await saveData(
-websiteData
-);
-
-renderTestimonials();
-
-closeTestimonialModal();
-
-alert(
-"Testimoni berhasil diperbarui"
-);
-
-}
-
 function closeTestimonialModal(){
 
 const modal =
@@ -624,15 +728,43 @@ modal.style.display =
 // ========================
 async function saveEdit(){
 
+const file =
+document.getElementById(
+"editImageFile"
+).files[0];
+
+let image = websiteData.products[editIndex].image;
+
+if(file){
+    try{
+        image = await uploadToCloudinary(file);
+
+        if(!image){
+            throw new Error("Upload gagal");
+        }
+    }catch(err){
+        alert("Upload gambar gagal");
+        return;
+    }
+}
+
 websiteData.products[editIndex] = {
 
     ...websiteData.products[editIndex],
 
-    title: document.getElementById("editTitle").value,
-    description: document.getElementById("editDesc").value,
-    price: document.getElementById("editPrice").value,
-    image: document.getElementById("editImage").value,
-    status: document.getElementById("editStatus").value
+    title:
+    document.getElementById("editTitle").value,
+
+    description:
+    document.getElementById("editDesc").value,
+
+    price:
+    document.getElementById("editPrice").value,
+
+    image:image,
+
+    status:
+    document.getElementById("editStatus").value
 
 };
 
