@@ -192,6 +192,7 @@ async function shareProduct(id){
     if(navigator.share){
 
         navigator.share({
+
             title: product.title,
             text: text,
             url: link
