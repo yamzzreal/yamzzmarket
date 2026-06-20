@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Testimoni - Yamzz Market</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+.testimoni-grid{
+.popup{
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.25s;
+
+}
+
+.popup.show{
+
+    opacity:1;
+    visibility:visible;
+
+}
+
+.popup img{
+
+    transform:scale(.9);
+
+    transition:.25s;
+
+}
+
+.popup.show img{
+
+    transform:scale(1);
+
+}
+
+.testi-btn:hover{
+
+    opacity:.9;
+
+}
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fill,minmax(250px,1fr));
+
+    gap:20px;
+
+}
+
+@media(max-width:768px){
+
+    .testimoni-grid{
+
+        grid-template-columns:
+        repeat(2,1fr);
+
+        gap:12px;
+
+    }
+
+    .testi-image{
+
+        height:150px;
+
+    }
+
+    .testi-title{
+
+        font-size:14px;
+
+    }
+
+    .testi-desc{
+
+        font-size:12px;
+
+    }
+
+}
+
+.testi-card{
+
+    background:var(--card);
+
+    border:1px solid
+    rgba(255,255,255,.08);
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    transition:.3s;
+
+}
+
+.testi-card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.testi-image{
+
+    position:relative;
+
+    height:220px;
+
+    overflow:hidden;
+
+}
+
+.testi-image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+.testi-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:15px 15px 0;
+
+}
+
+.badge-testi{
+
+    background:#173d78;
+
+    color:#7fd7ff;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+}
+
+.badge-real{
+
+    background:#0f5132;
+
+    color:#00ff99;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+}
+
+.testi-content{
+
+    padding:15px;
+
+}
+
+.testi-title{
+
+    font-size:18px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+}
+
+.testi-desc{
+
+    color:#aaa;
+
+    font-size:14px;
+
+    margin-bottom:15px;
+
+}
+
+.testi-btn{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:#4cc9ff;
+
+    color:#001321;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+}
+
+.popup{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+    rgba(0,0,0,.8);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+}
+
+.popup.show{
+
+    display:flex;
+
+}
+
+.popup img{
+
+    max-width:90%;
+
+    max-height:90%;
+
+    border-radius:20px;
+
+}
+
+.close-popup{
+
+    position:absolute;
+
+    top:20px;
+
+    right:20px;
+
+    width:45px;
+
+    height:45px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    cursor:pointer;
+
+    font-size:20px;
+
+}
+
+.nav-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.theme-btn{
+
+    width:45px;
+    height:45px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+    rgba(255,255,255,.08);
+
+    color:#fff;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+}
+
+.light-mode{
+
+    background:#f5f7fb;
+
+    color:#111;
+
+}
+
+.light-mode .testi-card{
+
+    background:#fff;
+
+    border:1px solid #ddd;
+
+}
+
+.light-mode .testi-desc{
+
+    color:#666;
+
+}
+
+.light-mode .navbar{
+
+    background:#fff;
+
+}
+
+.light-mode .theme-btn{
+
+    background:#eee;
+
+    color:#111;
+
+}
+</style>
+
+</head>
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <img
+        src="assets/hero.png"
+        class="hero-preview">
+
+        <h2>Yamzz Market</h2>
+
+    </div>
+
+<div class="nav-actions">
+
+    <button
+    class="theme-btn"
+    onclick="
+    window.location.href=
+    'index.html'
+    ">
+        🏠
+    </button>
+
+    <button
+    class="theme-btn"
+    onclick="toggleTheme()"
+    id="themeBtn">
+        🌙
+    </button>
+
+</div>
+</nav>
+
+<section class="section">
+
+    <h1 class="section-title">
+
+        Testimoni Pelanggan
+
+    </h1>
+
+<div
+class="testimoni-grid"
+id="testimoniGrid">
+
+    <div class="loading-card"></div>
+    <div class="loading-card"></div>
+    <div class="loading-card"></div>
+
+</div>
+
+</section>
+
+<div
+class="popup"
+id="popup">
+
+    <button
+    class="close-popup"
+    onclick="closePopup()">
+
+        ✕
+
+    </button>
+
+    <img
+    id="popupImage">
+
+</div>
+
+<script src="js/jsonbin.js"></script>
+
+<script>
+
+const popup =
+document.getElementById("popup");
+
+const popupImage =
+document.getElementById("popupImage");
+
+async function loadTestimonials(){
+
+    const grid =
+    document.getElementById(
+    "testimoniGrid"
+    );
+
+    try{
+
+        const data =
+        await getData();
+
+        grid.innerHTML = "";
+
+        const testimonials =
+        data?.testimonials || [];
+
+        if(
+        testimonials.length === 0
+        ){
+
+            grid.innerHTML = `
+
+            <div style="
+            grid-column:1/-1;
+            text-align:center;
+            padding:50px;
+            color:#888;
+            ">
+
+            Belum ada testimoni
+
+            </div>
+
+            `;
+
+            return;
+        }
+
+        testimonials.forEach(item=>{
+
+            grid.innerHTML += `
+
+            <div class="testi-card">
+
+                <div class="testi-image">
+
+                    <img
+                    src="${item.image}"
+                    alt="${item.title}"
+                    loading="lazy"
+
+                    onerror="
+                    this.src=
+                    'assets/no-image.png'
+                    ">
+
+                </div>
+
+                <div class="testi-top">
+
+                    <span class="badge-testi">
+                        TESTIMONI
+                    </span>
+
+                    <span class="badge-real">
+                        REAL
+                    </span>
+
+                </div>
+
+                <div class="testi-content">
+
+                    <div class="testi-title">
+                        ${item.title}
+                    </div>
+
+                    <div class="testi-desc">
+                        ${item.desc}
+                    </div>
+
+                    <button
+                    class="testi-btn"
+                    onclick="
+                    openPopup(
+                    '${item.image}'
+                    )">
+
+                        Detail
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            `;
+
+        });
+
+    }catch(err){
+
+        console.error(err);
+
+        grid.innerHTML = `
+
+        <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:50px;
+        color:red;
+        ">
+
+        Gagal memuat testimoni
+
+        </div>
+
+        `;
+
+    }
+
+}
+
+function openPopup(img){
+
+    popupImage.src = img;
+
+    popup.classList.add(
+    "show"
+    );
+
+}
+
+function closePopup(){
+
+    popup.classList.remove(
+    "show"
+    );
+
+}
+
+function toggleTheme(){
+
+    document.body
+    .classList.toggle(
+    "light-mode"
+    );
+
+    const isLight =
+    document.body
+    .classList.contains(
+    "light-mode"
+    );
+
+    document
+    .getElementById(
+    "themeBtn"
+    ).innerHTML =
+    isLight ? "☀️" : "🌙";
+
+    localStorage.setItem(
+    "yamzz_theme",
+    isLight
+    ? "light"
+    : "dark"
+    );
+
+}
+
+window.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+    const saved =
+    localStorage.getItem(
+    "yamzz_theme"
+    );
+
+    if(saved==="light"){
+
+        document.body
+        .classList.add(
+        "light-mode"
+        );
+
+        document
+        .getElementById(
+        "themeBtn"
+        ).innerHTML =
+        "☀️";
+
+    }
+
+    loadTestimonials();
+
+    popup.addEventListener(
+    "click",
+    (e)=>{
+
+        if(
+        e.target === popup
+        ){
+
+            closePopup();
+
+        }
+
+    });
+
+});
+
+</script>
+</body>
+  </html>
