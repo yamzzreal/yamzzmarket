@@ -5,18 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Admin Panel - Yamzz Market</title>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <link rel="stylesheet" href="css/style.css">
 
 <style>
+html{
+    scroll-behavior:smooth;
+}
 
+*{
+    box-sizing:border-box;
+}
 body{
     background:#061226;
 }
 
+.sidebar{
+    width:250px;
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    background:#08173a;
+    padding:20px;
+}
+
 .admin-container{
-    max-width:1200px;
-    margin:auto;
+    margin-left:270px;
     padding:25px;
 }
 
@@ -38,7 +55,8 @@ body{
 }
 
 .admin-card{
-
+    
+    transition:.3s;
     background:
     linear-gradient(
     180deg,
@@ -57,6 +75,9 @@ body{
 
 }
 
+.admin-card:hover{
+    transform:translateY(-3px);
+}
 .input{
 
     width:100%;
@@ -215,19 +236,15 @@ body{
 }
 
 .logout-btn{
-
+    width:100%;
+    margin-top:20px;
     border:none;
-
-    padding:12px 20px;
-
+    padding:14px;
     border-radius:15px;
-
     background:#ff5ab3;
-
-    color:white;
-
+    color:#fff;
+    font-weight:700;
     cursor:pointer;
-
 }
 
 .loading-card{
@@ -264,6 +281,162 @@ background-position:-200% 0;
 
 }
 
+#testimoniList{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fill,minmax(280px,1fr));
+    gap:15px;
+}
+
+.testi-item{
+    background:#102347;
+    border-radius:20px;
+    overflow:hidden;
+    padding:15px;
+}
+
+.testi-item img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:15px;
+}
+
+#editTestiModal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.8);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    opacity:0;
+    transition:.25s;
+}
+
+#editTestiModal.show{
+    opacity:1;
+}
+
+#editTestiModal .modal-box{
+    width:95%;
+    max-width:450px;
+    background:#08173a;
+    padding:20px;
+    border-radius:20px;
+    transform:scale(.9);
+    transition:.25s;
+}
+
+#editTestiModal.show .modal-box{
+    transform:scale(1);
+}
+
+.dashboard-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.stat-card{
+    background:linear-gradient(
+    135deg,
+    #102347,
+    #08173a
+    );
+
+    padding:20px;
+    border-radius:20px;
+
+    text-align:center;
+
+    border:1px solid
+    rgba(255,255,255,.08);
+}
+
+.stat-number{
+    font-size:32px;
+    font-weight:800;
+    color:#4cc9ff;
+}
+
+.stat-label{
+    color:#aaa;
+    margin-top:5px;
+}
+
+#editModal,
+#editTestiModal{
+    display:none;
+    position:fixed;
+    visibility:hidden;
+    inset:0;
+    background:rgba(0,0,0,.8);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    opacity:0;
+    transition:.25s;
+}
+
+#editModal.show,
+#editTestiModal.show{
+    display:flex;
+    visibility:visible;
+    opacity:1;
+}
+
+#editModal .modal-box,
+#editTestiModal .modal-box{
+    width:95%;
+    max-width:500px;
+    background:#08173a;
+    padding:20px;
+    border-radius:20px;
+    transform:scale(.9);
+    transition:.25s;
+}
+
+#editModal.show .modal-box,
+#editTestiModal.show .modal-box{
+    transform:scale(1);
+}
+
+.sidebar a{
+    display:block;
+    color:#fff;
+    text-decoration:none;
+    padding:12px 15px;
+    border-radius:12px;
+    margin-bottom:8px;
+    transition:.3s;
+    overflow-y:auto;
+}
+
+.sidebar a:hover{
+    background:#102347;
+}
+
+@media(max-width:768px){
+
+.sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+    margin-bottom:20px;
+}
+
+.admin-container{
+    margin-left:0;
+    padding:15px;
+}
+
+.dashboard-stats{
+    grid-template-columns:1fr;
+}
+
+}
 </style>
 
 </head>
@@ -271,11 +444,13 @@ background-position:-200% 0;
 
 <div class="admin-container">
 
-<div class="admin-header">
+<div class="sidebar">
 
-<h1 class="admin-title">
-Yamzz Market Admin
-</h1>
+<h2>YAMZZ ADMIN</h2>
+
+<a href="#dashboard">Dashboard</a>
+<a href="#produk">Produk</a>
+<a href="#testimoni">Testimoni</a>
 
 <button
 class="logout-btn"
@@ -287,6 +462,43 @@ Logout
 
 </div>
 
+<div id="dashboard" class="dashboard-stats">
+
+<div class="stat-card">
+    <div
+    class="stat-number"
+    id="totalProducts">
+    0
+    </div>
+
+    <div class="stat-label">
+    Produk
+    </div>
+</div>
+
+<div class="stat-card">
+    <div
+    class="stat-number"
+    id="totalTestimonials">
+    0
+    </div>
+
+    <div class="stat-label">
+    Testimoni
+    </div>
+</div>
+
+<div class="stat-card">
+    <div class="stat-number">
+    ✓
+    </div>
+
+    <div class="stat-label">
+    Online
+    </div>
+</div>
+
+</div>
 <!-- Pengaturan Website -->
 
 <div class="admin-card">
@@ -340,8 +552,7 @@ Simpan Pengaturan
 
 <!-- Tambah Produk -->
 
-<div class="admin-card">
-
+<div id="produk" class="admin-card">
 <h2>Tambah Produk</h2>
 
 <br>
@@ -396,6 +607,51 @@ Tambah Produk
 
 </div>
 
+<!-- Tambah Testimoni -->
+<!-- Kelola Testimoni -->
+
+<div id="testimoni" class="admin-card">
+<h2>Kelola Testimoni</h2>
+
+    <br>
+
+    <input
+    type="text"
+    id="testiTitle"
+    class="input"
+    placeholder="Judul Testimoni">
+
+    <br><br>
+
+    <input
+    type="text"
+    id="testiDesc"
+    class="input"
+    placeholder="Deskripsi">
+
+    <br><br>
+
+    <input
+    type="text"
+    id="testiImage"
+    class="input"
+    placeholder="URL Gambar">
+
+    <br><br>
+
+    <button
+    class="save-btn"
+    onclick="addTestimonial()">
+
+        Tambah Testimoni
+
+    </button>
+
+    <br><br>
+
+    <div id="testimoniList"></div>
+
+</div>
 <!-- Daftar Produk -->
 
 <div class="admin-card">
@@ -424,8 +680,6 @@ placeholder="Masukkan Spek...">
 </div>
 
 </div>
-
-</div>
 <div id="editModal">
 
   <div class="modal-box">
@@ -434,7 +688,6 @@ placeholder="Masukkan Spek...">
   <i class="fa-solid fa-pen-to-square" style="color:#00e5ff;"></i>
   Edit Produk
 </h3>
-
 <input id="editTitle" placeholder="Nama Produk"
 style="width:100%; margin-bottom:10px; padding:10px;
 border:none; border-radius:8px;
@@ -496,8 +749,57 @@ Batal
   </div>
 
 </div>
+<div id="editTestiModal">
+
+  <div class="modal-box">
+
+    <h3>Edit Testimoni</h3>
+
+    <input
+    id="editTestiTitle"
+    class="input"
+    placeholder="Judul">
+
+    <br><br>
+
+    <input
+    id="editTestiDesc"
+    class="input"
+    placeholder="Deskripsi">
+
+    <br><br>
+
+    <input
+    id="editTestiImage"
+    class="input"
+    placeholder="URL Gambar">
+
+    <br><br>
+
+    <button
+    class="save-btn"
+    onclick="saveTestimonialEdit()">
+
+      Simpan Perubahan
+
+    </button>
+
+    <br><br>
+
+    <button
+    class="delete-btn"
+    style="width:100%;"
+    onclick="closeTestimonialModal()">
+
+      Batal
+
+    </button>
+
+  </div>
+
+</div>
 <script src="js/jsonbin.js"></script>
 <script src="js/admin.js"></script>
 
 </body>
-</html>
+    </html>
