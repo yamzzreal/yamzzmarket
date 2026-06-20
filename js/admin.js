@@ -557,8 +557,6 @@ modal.classList.add(
 renderTestimonials();
 
 updateDashboard();
-
-closeTestimonialModal();
 }
 
 async function saveTestimonialEdit(){
