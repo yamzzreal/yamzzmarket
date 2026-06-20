@@ -189,8 +189,9 @@ async function shareProduct(id){
 
 🔗 ${link}`;
 
-    if(navigator.share)({
+    if(navigator.share){
 
+        navigator.share({
             title: product.title,
             text: text,
             url: link
