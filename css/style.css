@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 :root{
---button-bg:#ff5ab3;
+--button-bg:#5ac1ff;
 --button-text:#fff;
 --bg:#07142b;
 --bg2:#0b1e3f;
@@ -55,8 +55,8 @@ padding:18px 25px;
 
 backdrop-filter:blur(20px);
 
-background:
-rgba(7,20,43,.85);
+background:var(--bg2)
+;
 
 border-bottom:
 1px solid var(--border);
@@ -498,7 +498,7 @@ margin-bottom:25px;
     background:
     rgba(255,80,180,.15);
 
-    color:#ff5ab3;
+    color:#2ea6ff;
 
     font-size:13px;
 
@@ -513,7 +513,7 @@ margin-bottom:25px;
     background:
     rgba(255,80,180,.15);
 
-    color:#ff9cd0;
+    color:#2ea6ff;
 
     font-size:13px;
 
@@ -557,7 +557,7 @@ margin-bottom:25px;
 
     font-weight:800;
 
-    color:#ff5ab3;
+    color:#2ea6ff;
 
 }
 
@@ -581,7 +581,7 @@ margin-bottom:25px;
 
     padding:13px;
 
-    background:var(--button-bg);
+    background:var(--primary);
     color:var(--button-text);
 
     font-weight:700;
@@ -609,16 +609,16 @@ margin-bottom:25px;
     border-radius:50%;
 
     background:
-    rgba(255,255,255,.05);
+    var(--bg2);
 
-    color:white;
+    color:var(--button-text);
 
     font-size:22px;
 
     cursor:pointer;
 
     border:1px solid
-    rgba(255,255,255,.08);
+    var(--button-text);
 
 }
 
@@ -654,7 +654,7 @@ margin-bottom:25px;
 
     padding:15px;
 
-    color:white;
+    color:var(--button-text)
 
     text-decoration:none;
 
@@ -665,7 +665,7 @@ margin-bottom:25px;
 .mobile-menu a:hover{
 
     background:
-    rgba(255,255,255,.05);
+    var(--bg2);
 
 }
 
@@ -679,31 +679,21 @@ margin-bottom:25px;
 
     --text:#111827;
     --muted:#6b7280;
-    --button-bg:#ff5ab3;
-    --button-text:#fff;
+    --button-bg:#5ac1ff;
+    --button-text:#000;
     --border:rgba(0,0,0,.08);
     --stats-bg:#eef5ff;
 
 }
 .detail-btn{
-
-    flex:1;
-
-    border:1px solid
-    rgba(255,255,255,.15);
-
-    border-radius:18px;
-
-    padding:13px;
-
-    background:transparent;
-
-    color:white;
-
-    font-weight:700;
-
-    cursor:pointer;
-
+  flex:1;
+  border:1px solid var(--button-bg);
+  border-radius:18px;
+  padding:13px;
+  background:transparent;
+  color:var(--button-text); /* ini sudah otomatis ikut tema */
+  font-weight:700;
+  cursor:pointer;
 }
 
 /* LOADING */
@@ -1032,4 +1022,4 @@ text-align:center;
 #editModal.show .modal-box{
   transform:scale(1);
   opacity:1;
-    }
+}
