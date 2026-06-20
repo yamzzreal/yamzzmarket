@@ -45,31 +45,82 @@ renderAdminProducts();
 
 function renderAdminProducts(productList = websiteData.products){
 
-const list = document.getElementById("productList");
+const list =
+document.getElementById("productList");
+
 list.innerHTML = "";
 
-productList.forEach((product, index) => {
+productList.forEach((product,index)=>{
 
-    list.innerHTML += `
-    <div class="product-item">
-        <h3>${product.title}</h3>
+list.innerHTML += `
 
-        <p>Rp ${Number(product.price).toLocaleString("id-ID")}</p>
+<div class="product">
 
-        <p>${product.status || "Aktif"}</p>
+    <div class="product-image">
 
-        <div class="actions">
-            <button class="edit-btn" onclick="editProduct(${index})">
-                Edit
-            </button>
+        <img
+        src="${product.image}"
+        alt="${product.title}">
 
-            <button class="delete-btn" onclick="deleteProduct(${index})">
-                Hapus
-            </button>
-        </div>
     </div>
-    `;
+
+    <div class="product-top">
+
+        <span class="badge-game">
+            Free Fire
+        </span>
+
+        <span class="badge-ready">
+            ${product.status || "ready"}
+        </span>
+
+    </div>
+
+    <div class="product-title">
+
+        ${product.title}
+
+    </div>
+
+    <div class="price-label">
+
+        HARGA
+
+    </div>
+
+    <div class="price">
+
+        Rp ${Number(product.price)
+        .toLocaleString("id-ID")}
+
+    </div>
+
+    <div class="product-buttons">
+
+        <button
+        class="buy-btn"
+        onclick="editProduct(${index})">
+
+            Edit
+
+        </button>
+
+        <button
+        class="detail-btn"
+        onclick="deleteProduct(${index})">
+
+            Hapus
+
+        </button>
+
+    </div>
+
+</div>
+
+`;
+
 });
+
 }
 
 function searchProduct(keyword){
