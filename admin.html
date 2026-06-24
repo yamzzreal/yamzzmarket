@@ -437,6 +437,14 @@ background-position:-200% 0;
 }
 
 }
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
 </style>
 
 </head>
@@ -446,61 +454,52 @@ background-position:-200% 0;
 
 <div class="sidebar">
 
-<h2>YAMZZ ADMIN</h2>
+<a onclick="showPage('dashboard')">
+Dashboard
+</a>
 
-<a href="#dashboard">Dashboard</a>
-<a href="#produk">Produk</a>
-<a href="#testimoni">Testimoni</a>
+<a onclick="showPage('setting')">
+setting
+</a>
 
-<button
-class="logout-btn"
-onclick="logout()">
+<a onclick="showPage('produk')">
+Produk
+</a>
 
-Logout
+<a onclick="showPage('testimoni')">
+Testimoni
+</a>
 
-</button>
+<a onclick="showPage('kategori')">
+Kategori
+</a>
 
 </div>
 
-<div id="dashboard" class="dashboard-stats">
+<div id="dashboard" class="page active">
+
+<div class="dashboard-stats">
 
 <div class="stat-card">
-    <div
-    class="stat-number"
-    id="totalProducts">
-    0
-    </div>
-
-    <div class="stat-label">
-    Produk
-    </div>
+<div class="stat-number" id="totalProducts">0</div>
+<div class="stat-label">Produk</div>
 </div>
 
 <div class="stat-card">
-    <div
-    class="stat-number"
-    id="totalTestimonials">
-    0
-    </div>
-
-    <div class="stat-label">
-    Testimoni
-    </div>
+<div class="stat-number" id="totalTestimonials">0</div>
+<div class="stat-label">Testimoni</div>
 </div>
 
 <div class="stat-card">
-    <div class="stat-number">
-    ✓
-    </div>
+<div class="stat-number">✓</div>
+<div class="stat-label">Online</div>
+</div>
 
-    <div class="stat-label">
-    Online
-    </div>
 </div>
 
 </div>
 <!-- Pengaturan Website -->
-
+<div id="setting" class="page">
 <div class="admin-card">
 
 <h2>Pengaturan Website</h2>
@@ -549,9 +548,48 @@ Simpan Pengaturan
 </button>
 
 </div>
+</div>
+<!-- Tambah kategory -->
+<div id="kategori" class="page">
+<div class="admin-card">
 
+<h2>Kelola Kategori</h2>
+
+<br>
+
+<div style="display:flex;gap:10px;">
+
+<input
+type="text"
+id="newCategory"
+class="input"
+placeholder="Nama kategori">
+
+<button
+class="save-btn"
+style="width:auto;padding:0 20px;"
+onclick="addCategory()">
+
+Tambah
+
+</button>
+
+</div>
+</div>
+<section class="section"><h2 class="section-title">
+    List kategori
+</h2>
+
+<div id="categoryList">
+
+</div>
+
+</section>
+</div>
+<br>
 <!-- Tambah Produk -->
 
+<div id="produk" class="page">
 <div class="admin-card">
 <h2>Tambah Produk</h2>
 
@@ -581,6 +619,16 @@ placeholder="Harga">
 
 <br><br>
 
+<select
+id="category"
+class="input">
+<option value="">
+Pilih Kategori
+</option>
+</select>
+
+<br><br>
+
 <input
 type="file"
 id="imageFile"
@@ -607,9 +655,30 @@ Tambah Produk
 
 </div>
 
+<section class="section"><h2 class="section-title">
+    Produk Terbaru
+</h2>
+
+
+<input
+type="text"
+id="searchInput"
+class="search"
+placeholder="Masukkan Spek...">
+
+<div id="productList" class="products">
+
+    <div class="loading-card"></div>
+    <div class="loading-card"></div>
+    <div class="loading-card"></div>
+
+</div>
+
+</section>
+</div>
 <!-- Tambah Testimoni -->
 <!-- Kelola Testimoni -->
-
+<div id="testimoni" class="page">
 <div class="admin-card">
 <h2>Kelola Testimoni</h2>
 
@@ -650,34 +719,6 @@ accept="image/*">
     <br><br>
 
 </div>
-
-<!-- Daftar Produk -->
-
-<div id="produk" class="admin-card">
-
-<section class="section"><h2 class="section-title">
-    Produk Terbaru
-</h2>
-
-
-<input
-type="text"
-id="searchInput"
-class="search"
-placeholder="Masukkan Spek...">
-
-<div id="productList" class="products">
-
-    <div class="loading-card"></div>
-    <div class="loading-card"></div>
-    <div class="loading-card"></div>
-
-</div>
-
-</section>
-
-</div>
-<div id="testimoni" class="admin-card">
   <section class="section"><h2 class="section-title">
     Testimoni Terbaru
   </h2>
@@ -688,6 +729,9 @@ placeholder="Masukkan Spek...">
       </div>
   </section>
 </div>
+<!-- Daftar Produk -->
+
+
 </div>
 <div id="editModal">
 
@@ -717,6 +761,13 @@ type="file"
 id="editImageFile"
 class="input"
 accept="image/*">
+
+<select
+id="editCategory"
+style="width:100%; margin-bottom:12px; padding:10px;
+border:none; border-radius:8px;
+background:#111; color:#fff; outline:none;">
+</select>
 
 <select id="editStatus"
 style="width:100%; margin-bottom:12px; padding:10px;
@@ -811,6 +862,25 @@ accept="image/*">
 </div>
 <script src="js/jsonbin.js"></script>
 <script src="js/admin.js"></script>
+<script>
+  function showPage(pageId){
+
+    document
+    .querySelectorAll(".page")
+    .forEach(page=>{
+        page.classList.remove("active");
+    });
+
+    document
+    .getElementById(pageId)
+    .classList.add("active");
+
+}
+
+// halaman pertama
+showPage("dashboard");
+</script>
 
 </body>
     </html>
+    
