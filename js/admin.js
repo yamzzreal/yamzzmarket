@@ -1,233 +1,343 @@
 /* =========================
-YAMZZ MARKET JSONBIN.JS
+YAMZZ MARKET ADMIN.JS
 ========================= */
 
-// GANTI DENGAN DATA JSONBIN KAMU
+// Data website
 
-const BIN_ID = "6a32e7b9da38895dfed22d14";
-const API_KEY = "$2a$10$QQTsW9lEiJrPCaC7VKkgH.SF8xR/Gn2/LbQ6lGp4yKxAFU9PsdCu.";
+let websiteData = null;
+let editIndex = null;
+let editTestiIndex = null;
 
-const API_URL =
-`https://api.jsonbin.io/v3/b/${BIN_ID}`;
+function updateDashboard(){
 
-// =========================
-// AMBIL DATA
-// =========================
-let allProducts = [];
-let currentCategory = "all";
-
-async function getData() {
-
-try {
-
-    const response = await fetch(API_URL + "/latest", {
-        method: "GET",
-        headers: {
-            "X-Master-Key": API_KEY
-        }
-    });
-
-    const result = await response.json();
-
-    return result.record;
-
-} catch(error) {
-
-    console.error(
-        "Gagal mengambil data",
-        error
+    const totalProducts =
+    document.getElementById(
+    "totalProducts"
     );
 
+    const totalTestimonials =
+    document.getElementById(
+    "totalTestimonials"
+    );
+
+    if(totalProducts){
+
+        totalProducts.innerText =
+        websiteData.products.length;
+
+    }
+
+    if(totalTestimonials){
+
+        totalTestimonials.innerText =
+        websiteData.testimonials.length;
+
+    }
+
+}
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+const search =
+document.getElementById(
+"searchInput"
+);
+
+if(search){
+
+search.addEventListener(
+"input",
+function(){
+
+searchProduct(
+this.value
+);
+
+});
+
+}
+
+});
+// =========================
+// LOAD DATA
+// =========================
+
+async function loadAdmin() {
+
+websiteData = await getData();
+
+if(!websiteData){
+
+    alert("Gagal mengambil data");
+    return;
+
+}
+
+// buat struktur default
+
+if(!websiteData.settings)
+websiteData.settings = {};
+
+if(!websiteData.products)
+websiteData.products = [];
+
+if(!websiteData.testimonials)
+websiteData.testimonials = [];
+
+if(!websiteData.categories)
+websiteData.categories = [];
+
+document.getElementById(
+"totalProducts"
+).innerText =
+websiteData.products.length;
+
+document.getElementById(
+"totalTestimonials"
+).innerText =
+(
+websiteData.testimonials || []
+).length;
+
+document.getElementById(
+"siteName"
+).value =
+websiteData.settings.site_name || "";
+
+document.getElementById(
+"siteWa"
+).value =
+websiteData.settings.whatsapp || "";
+
+renderCategories(
+websiteData.categories
+);
+
+renderAdminProducts();
+
+renderTestimonials();
+
+updateDashboard();
+
+}
+
+async function uploadToCloudinary(file){
+
+    try{
+
+        const formData = new FormData();
+
+        formData.append("file", file);
+        formData.append("upload_preset", "yamzzmarket");
+
+        const res = await fetch(
+            "https://api.cloudinary.com/v1_1/dlutuixsc/image/upload",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        const data = await res.json();
+
+        console.log(data);
+
+if(data.error){
+    alert(data.error.message);
     return null;
 }
 
-}
+        return data.secure_url;
 
-// =========================
-// SIMPAN DATA
-// =========================
+    }catch(err){
 
-async function saveData(data) {
+        console.error(err);
 
-try {
+        alert("Upload gagal: " + err.message);
 
-    const response = await fetch(API_URL, {
+        return null;
 
-        method: "PUT",
-
-        headers: {
-            "Content-Type":
-            "application/json",
-
-            "X-Master-Key":
-            API_KEY
-        },
-
-        body: JSON.stringify(data)
-
-    });
-
-    return await response.json();
-
-} catch(error) {
-
-    console.error(
-        "Gagal menyimpan data",
-        error
-    );
-
-    return null;
+    }
 
 }
 
+function renderCategories(categories){
+
+const list =
+document.getElementById(
+"categoryList"
+);
+
+const select =
+document.getElementById(
+"category"
+);
+
+const editSelect =
+document.getElementById(
+"editCategory"
+);
+
+if(list){
+list.innerHTML = "";
 }
 
-// =========================
-// LOAD WEBSITE
-// =========================
+if(select){
+select.innerHTML =
+'<option value="">Pilih Kategori</option>';
+}
 
-async function loadWebsite() {
+if(editSelect){
+editSelect.innerHTML = "";
+}
+
+categories.forEach(cat=>{
+
+if(list){
+
+list.innerHTML += `
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#102347;
+padding:10px;
+border-radius:10px;
+margin-bottom:10px;
+">
+
+<span>${cat}</span>
+
+<button
+class="delete-btn"
+onclick="deleteCategory('${cat}')">
+
+Hapus
+
+</button>
+
+</div>
+`;
+
+}
+
+if(select){
+
+select.innerHTML += `
+<option value="${cat}">
+${cat}
+</option>
+`;
+
+}
+
+if(editSelect){
+
+editSelect.innerHTML += `
+<option value="${cat}">
+${cat}
+</option>
+`;
+
+}
+
+});
+
+}
+
+async function addCategory(){
+
+const input =
+document.getElementById(
+"newCategory"
+);
+
+const category =
+input.value.trim();
+
+if(!category) return;
+
+const data =
+await getData();
+
+if(!data.categories){
+data.categories = [];
+}
+
+if(
+data.categories.includes(
+category
+)
+){
+alert("Kategori sudah ada");
+return;
+}
+
+data.categories.push(
+category
+);
+
+await saveData(data);
+websiteData = data;
+input.value = "";
+
+renderCategories(
+data.categories
+);
+
+}
+
+async function deleteCategory(category){
 
 const data = await getData();
 
-if(!data) return;
-
-// Nama Toko
-
-const title =
-document.getElementById("site-name");
-
-if(title){
-    title.innerText =
-    data.settings.site_name;
-}
-
-// Produk
-
-allProducts = data.products || [];
-
-generateCategories();
-
-renderProducts(allProducts);
-
-}
-
-window.addEventListener(
-"load",
-loadWebsite
+const used =
+(data.products || []).some(
+p => p.category === category
 );
 
-function renderStatus(status) {
-    return status === "sold"
-        ? `<span style="color:red;font-weight:bold;">SOLD</span>`
-        : `<span style="color:lime;font-weight:bold;">READY</span>`;
-}
-// ====================
-// FUNCTION buy-btn
-
-function buyProduct(id){
-
-    getData().then(data => {
-
-        const product =
-        data.products.find(
-        p => String(p.id) === String(id)
-        );
-
-        if(!product) return;
-
-        const detailLink =
-        `${location.origin}/detail.html?id=${product.id}`;
-
-        const message =
-
-`Halo mas Yamzz 👋
-
-Saya ingin membeli akun berikut:
-
-📌 Nama :
-${product.title}
-
-💰 Harga :
-Rp ${Number(product.price).toLocaleString("id-ID")}
-
-📝 Spek :
-${product.description}
-
-🔗 Link Produk :
-${detailLink}
-
-Mohon info ketersediaannya ya 🙏`;
-
-        window.open(
-        `https://wa.me/${product.whatsapp}?text=${encodeURIComponent(message)}`
-        );
-
-    });
-
+if(used){
+alert(
+"Kategori masih digunakan oleh produk"
+);
+return;
 }
 
-async function shareProduct(id){
+if(
+!confirm(
+`Hapus kategori ${category}?`
+)
+) return;
 
-    const data =
-    await getData();
+data.categories =
+data.categories.filter(
+c => c !== category
+);
 
-    const product =
-    data.products.find(
-    p => String(p.id) === String(id)
-    );
+await saveData(data);
 
-    if(!product) return;
+websiteData = data;
 
-    const link =
-    `https://www.yamzzoffc.my.id/detail.html?id=${product.id}`;
-
-    const text =
-
-`🔥 ${product.title}
-
-💰 Rp ${Number(product.price)
-.toLocaleString("id-ID")}
-
-📝 ${product.description}
-
-🔗 ${link}`;
-
-    if(navigator.share){
-
-        navigator.share({
-
-            title: product.title,
-            text: text,
-            url: link
-
-        });
-
-    }else{
-
-        navigator.clipboard.writeText(link);
-
-        alert("Link produk berhasil disalin");
-
-    }
+renderCategories(
+data.categories
+);
 
 }
 // =========================
 // RENDER PRODUK
 // =========================
 
-function renderProducts(products){
+function renderAdminProducts(productList = websiteData.products){
 
-const container =
-document.getElementById("products");
+const list =
+document.getElementById("productList");
 
-if(!container) return;
+list.innerHTML = "";
 
-container.innerHTML = "";
+productList.forEach((product,index)=>{
 
-products.forEach(product => {
-
-    container.innerHTML += `
+list.innerHTML += `
 
 <div class="product">
 
@@ -237,24 +347,16 @@ products.forEach(product => {
         src="${product.image}"
         alt="${product.title}">
 
-        <button
-        class="share-icon"
-        onclick="shareProduct('${product.id}')">
-
-            <i class="fa-solid fa-share"></i>
-
-        </button>
-
     </div>
 
     <div class="product-top">
 
         <span class="badge-game">
-    ${product.category || "Game"}
+    ${product.category || "Tanpa Kategori"}
 </span>
 
         <span class="badge-ready">
-            ${product.status}
+            ${product.status || "ready"}
         </span>
 
     </div>
@@ -273,9 +375,8 @@ products.forEach(product => {
 
     <div class="price">
 
-        Rp ${Number(
-        product.price
-        ).toLocaleString("id-ID")}
+        Rp ${Number(product.price)
+        .toLocaleString("id-ID")}
 
     </div>
 
@@ -283,20 +384,17 @@ products.forEach(product => {
 
         <button
         class="buy-btn"
-        onclick="buyProduct('${product.id}')">
+        onclick="editProduct(${index})">
 
-            Beli
+            Edit
 
         </button>
 
         <button
         class="detail-btn"
-        onclick="
-        window.location.href=
-        'detail.html?id=${product.id}'
-        ">
+        onclick="deleteProduct(${index})">
 
-            Detail
+            Hapus
 
         </button>
 
@@ -309,142 +407,623 @@ products.forEach(product => {
 });
 
 }
+function searchProduct(keyword){
 
-// =========================
-// KATEGORI PRODUK 
-// =========================
-function generateCategories() {
-
-const container =
-document.getElementById(
-"categoryFilter"
+const filtered = websiteData.products.filter(item =>
+    item.title.toLowerCase().includes(keyword.toLowerCase()) ||
+    (item.description || "")
+.toLowerCase().includes(keyword.toLowerCase())
 );
 
-const categories = [
-"all",
-...new Set(
-allProducts.map(
-p => p.category || "Lainnya"
-)
-)
-];
+renderAdminProducts(filtered);
+
+}
+// =========================
+// SIMPAN SETTING
+// =========================
+
+async function saveSettings(){
+
+websiteData.settings.site_name =
+document.getElementById(
+"siteName"
+).value;
+
+websiteData.settings.whatsapp =
+document.getElementById(
+"siteWa"
+).value;
+
+await saveData(
+    websiteData
+);
+
+alert(
+    "Pengaturan berhasil disimpan"
+);
+
+}
+
+// =========================
+// TAMBAH PRODUK
+// =========================
+
+async function addProduct(){
+
+const title =
+document.getElementById(
+"title"
+).value;
+
+const description =
+document.getElementById(
+"description"
+).value;
+
+const price =
+document.getElementById(
+"price"
+).value;
+
+const category =
+document.getElementById(
+"category"
+).value;
+
+const file =
+document.getElementById(
+"imageFile"
+).files[0];
+
+if(!file){
+alert("Pilih gambar");
+return;
+}
+
+let image;
+
+try{
+
+    image =
+    await uploadToCloudinary(file);
+
+    if(!image){
+        throw new Error("Upload gagal");
+    }
+
+}catch(err){
+
+    alert("Upload gambar gagal");
+    return;
+
+}
+
+if(
+    !title ||
+    !description ||
+    !price ||
+    !image ||
+    !category
+){
+    alert(
+    "Lengkapi semua data"
+    );
+    return;
+}
+
+websiteData.products.push({
+id:Date.now(),
+title,
+description,
+price,
+category,
+image,
+status:"READY",
+whatsapp:websiteData.settings.whatsapp
+});
+
+await saveData(
+    websiteData
+);
+
+document.getElementById(
+"title"
+).value = "";
+
+document.getElementById(
+"description"
+).value = "";
+
+document.getElementById(
+"price"
+).value = "";
+
+document.getElementById(
+"imageFile"
+).value = "";
+
+document.getElementById(
+"category"
+).value = "";
+
+renderAdminProducts();
+
+updateDashboard();
+
+alert(
+"Produk berhasil ditambahkan"
+);
+
+}
+
+// =========================
+// HAPUS PRODUK
+// =========================
+
+async function deleteProduct(index){
+
+const confirmDelete =
+confirm(
+"Hapus produk ini?"
+);
+
+if(!confirmDelete)
+return;
+
+websiteData.products.splice(
+index,
+1
+);
+
+await saveData(
+websiteData
+);
+
+renderAdminProducts();
+
+updateDashboard();
+
+}
+
+// =========================
+// EDIT PRODUK
+// =========================
+
+function editProduct(index){
+
+editIndex = index;
+
+const product = websiteData.products[index];
+
+document.getElementById("editTitle").value = product.title;
+document.getElementById("editDesc").value = product.description;
+document.getElementById("editPrice").value = product.price;
+document.getElementById("editCategory").value = product.category || "";
+document.getElementById("editStatus").value = product.status;
+const modal = document.getElementById("editModal");
+modal.style.display = "flex";
+
+// trigger animasi fade + scale
+setTimeout(()=>{
+  modal.classList.add("show");
+},10);
+
+}
+
+function renderTestimonials(){
+
+const container =
+document.getElementById("testimoniList");
+
+if(!container) return;
 
 container.innerHTML = "";
 
-categories.forEach(cat => {
+const testimonials = websiteData.testimonials || [];
 
-const btn =
-document.createElement(
-"button"
+testimonials.forEach((item,index)=>{
+
+container.innerHTML += `
+
+<div class="product">
+
+    <div class="product-image">
+
+        <img src="${item.image}" alt="${item.title}">
+
+    </div>
+
+    <div class="product-top">
+
+        <span class="badge-game">
+            TESTIMONI
+        </span>
+
+        <span class="badge-ready">
+            REAL
+        </span>
+
+    </div>
+
+    <div class="product-title">
+        ${item.title}
+    </div>
+
+    <div class="price-label">
+        DESKRIPSI
+    </div>
+
+    <div class="price" style="font-size:14px;">
+        ${item.desc}
+    </div>
+
+    <div class="product-buttons">
+
+        <button class="buy-btn"
+        onclick="editTestimonial(${index})">
+            Edit
+        </button>
+
+        <button class="detail-btn"
+        onclick="deleteTestimonial(${index})">
+            Hapus
+        </button>
+
+    </div>
+
+</div>
+
+`;
+
+});
+
+}
+
+async function addTestimonial(){
+
+const title =
+document.getElementById(
+"testiTitle"
+).value;
+
+const desc =
+document.getElementById(
+"testiDesc"
+).value;
+
+const file =
+document.getElementById(
+"testiImageFile"
+).files[0];
+
+if(!file){
+    alert("Pilih gambar");
+    return;
+}
+
+let image;
+
+try{
+
+    image =
+    await uploadToCloudinary(file);
+
+    if(!image){
+        throw new Error("Upload gagal");
+    }
+
+}catch(err){
+
+    alert("Upload gambar gagal");
+    return;
+
+}
+
+if(
+!title ||
+!desc ||
+!image
+){
+alert("Lengkapi data");
+return;
+}
+
+if(!websiteData.testimonials){
+websiteData.testimonials = [];
+}
+
+websiteData.testimonials.push({
+
+id: Date.now(),
+
+title,
+
+desc,
+
+image
+
+});
+
+await saveData(
+websiteData
 );
 
-btn.className =
-"cat-btn";
+renderTestimonials();
 
-if(cat === "all")
-btn.classList.add(
-"active"
+updateDashboard();
+
+document.getElementById(
+"testiTitle"
+).value="";
+
+document.getElementById(
+"testiDesc"
+).value="";
+
+document.getElementById(
+"testiImageFile"
+).value="";
+
+alert(
+"Testimoni berhasil ditambahkan"
 );
 
-btn.textContent =
-cat === "all"
-? "Semua"
-: cat;
+}
 
-btn.onclick = () => {
+async function deleteTestimonial(index){
 
-document
-.querySelectorAll(".cat-btn")
-.forEach(b =>
-b.classList.remove(
-"active"
+if(
+!confirm(
+"Hapus testimoni?"
 )
+)return;
+
+websiteData
+.testimonials
+.splice(index,1);
+
+await saveData(
+websiteData
 );
 
-btn.classList.add(
-"active"
-);
+renderTestimonials();
 
-currentCategory = cat;
+updateDashboard();
 
-const filtered =
-currentCategory === "all"
-? allProducts
-: allProducts.filter(
-p => p.category === currentCategory
-);
+}
 
-renderProducts(filtered);
+async function saveTestimonialEdit(){
+
+const file =
+document.getElementById(
+"editTestiImageFile"
+).files[0];
+
+let image =
+websiteData.testimonials[
+editTestiIndex
+].image;
+
+if(file){
+    try{
+        image = await uploadToCloudinary(file);
+
+        if(!image){
+            throw new Error("Upload gagal");
+        }
+    }catch(err){
+        alert("Upload gambar gagal");
+        return;
+    }
+}
+
+websiteData.testimonials[
+editTestiIndex
+] = {
+
+...websiteData.testimonials[
+editTestiIndex
+],
+
+title:
+document.getElementById(
+"editTestiTitle"
+).value,
+
+desc:
+document.getElementById(
+"editTestiDesc"
+).value,
+
+image:image
 
 };
 
-container.appendChild(
-btn
+await saveData(
+websiteData
 );
 
-});
+renderTestimonials();
+
+closeTestimonialModal();
+
+alert(
+"Testimoni berhasil diperbarui"
+);
+
+}
+function editTestimonial(index){
+
+editTestiIndex = index;
+
+const item =
+websiteData.testimonials[index];
+
+document.getElementById(
+"editTestiTitle"
+).value = item.title;
+
+document.getElementById(
+"editTestiDesc"
+).value = item.desc;
+
+const modal =
+document.getElementById(
+"editTestiModal"
+);
+
+modal.style.display = "flex";
+
+setTimeout(()=>{
+
+modal.classList.add(
+"show"
+);
+
+},10);
+
+renderTestimonials();
+
+updateDashboard();
+}
+function closeTestimonialModal(){
+
+const modal =
+document.getElementById(
+"editTestiModal"
+);
+
+modal.classList.remove(
+"show"
+);
+
+setTimeout(()=>{
+
+modal.style.display =
+"none";
+
+},250);
+
+}
+// ========================
+// SAVE EDIT
+// ========================
+async function saveEdit(){
+
+const file =
+document.getElementById(
+"editImageFile"
+).files[0];
+
+let image = websiteData.products[editIndex].image;
+
+if(file){
+    try{
+        image = await uploadToCloudinary(file);
+
+        if(!image){
+            throw new Error("Upload gagal");
+        }
+    }catch(err){
+        alert("Upload gambar gagal");
+        return;
+    }
+}
+
+websiteData.products[editIndex] = {
+
+    ...websiteData.products[editIndex],
+
+    title:
+    document.getElementById("editTitle").value,
+
+    description:
+    document.getElementById("editDesc").value,
+
+    price:
+    document.getElementById("editPrice").value,
+    category:
+    document.getElementById("editCategory").value,
+    image:image,
+
+    status:
+    document.getElementById("editStatus").value
+
+};
+
+await saveData(websiteData);
+
+renderAdminProducts();
+
+closeModal();
+
+alert("Produk berhasil diperbarui");
+
+}
+
+function closeModal(){
+
+const modal = document.getElementById("editModal");
+
+modal.classList.remove("show");
+
+setTimeout(()=>{
+  modal.style.display = "none";
+},250);
 
 }
 // =========================
-// CARI PRODUK
+// LOGIN CHECK
 // =========================
 
-function searchProduct(keyword){
+async function checkLogin(){
 
-let filtered =
-currentCategory === "all"
-? allProducts
-: allProducts.filter(
-p => p.category === currentCategory
+const isLogin =
+localStorage.getItem(
+"yamzz_admin"
 );
 
-filtered = filtered.filter(item =>
+if(
+window.location.pathname
+.includes("admin.html")
+){
 
-(item.title || "")
-.toLowerCase()
-.includes(keyword.toLowerCase())
+    if(!isLogin){
 
-||
+        window.location.href =
+        "login.html";
 
-(item.description || "")
-.toLowerCase()
-.includes(keyword.toLowerCase())
+    }
 
-||
+}
 
-String(item.price)
-.includes(keyword)
+}
+// =========================
+// LOGOUT
+// =========================
 
+function logout(){
+
+localStorage.removeItem(
+"yamzz_admin"
 );
 
-renderProducts(filtered);
+location.href =
+"login.html";
 
 }
 
 // =========================
-// EVENT SEARCH
-// =========================
 
-document.addEventListener(
-"DOMContentLoaded",
-() => {
+window.addEventListener(
+"load",
+async ()=>{
 
-const search =
-document.querySelector(".search");
+await checkLogin();
 
-if(search){
+await loadAdmin();
 
-search.addEventListener(
-"input",
-(e) => {
-
-searchProduct(
-e.target.value
-);
+renderTestimonials();
 
 });
-
-}
-
-});
-                   
+    
