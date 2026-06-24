@@ -113,18 +113,33 @@ class="mobile-menu">
     </a>
 
 </div>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2527385325235137"
-     crossorigin="anonymous"></script>
-<!-- Display -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2527385325235137"
-     data-ad-slot="6629257601"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+<div class="banner-slider">
+    <img src="assets/banner.png" class="slide active">
+    <img src="assets/banner3.png" class="slide">
+    <img src="assets/banner4.png" class="slide">
+</div>
+<div class="slider-dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+</div>
+      <div class="dashboard-stats">
+                <div>
+                    <h4>200+</h4>
+                    <span>Transaksi</span>
+                </div>
+
+                <div>
+                    <h4>99%</h4>
+                    <span>Kepuasan</span>
+                </div>
+
+                <div>
+                    <h4>24/7</h4>
+                    <span>Support</span>
+                </div>
+
+            </div>
 <section class="hero" id="home"><div class="hero-content">
 
     <div class="hero-left">
@@ -157,36 +172,6 @@ class="mobile-menu">
         </div>
 
     </div>
-
-<div class="hero-right">
-
-    <div class="dashboard-card">
-
-        <img
-        src="assets/banner.png"
-        alt="Preview"
-        class="hero-preview">
-      <div class="dashboard-stats">
-
-                <div>
-                    <h4>200+</h4>
-                    <span>Transaksi</span>
-                </div>
-
-                <div>
-                    <h4>99%</h4>
-                    <span>Kepuasan</span>
-                </div>
-
-                <div>
-                    <h4>24/7</h4>
-                    <span>Support</span>
-                </div>
-
-            </div>
-    </div>
-
-</div>
 
 </div>
 
@@ -222,6 +207,8 @@ class="mobile-menu">
 type="text"
 class="search"
 placeholder="Cari produk sesuai spek atau harga...">
+
+<div id="categoryFilter" class="category-filter"></div>
 
 <div id="products" class="products">
 
@@ -319,6 +306,83 @@ placeholder="Cari produk sesuai spek atau harga...">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="js/jsonbin.js"></script>
 <script>
+const slides = document.querySelectorAll(".slide");
+const dots = document.querySelectorAll(".dot");
+
+let current = 0;
+
+function showSlide(index){
+
+    slides.forEach(slide =>
+        slide.classList.remove("active")
+    );
+
+    dots.forEach(dot =>
+        dot.classList.remove("active")
+    );
+
+    slides[index].classList.add("active");
+    dots[index].classList.add("active");
+
+    current = index;
+}
+
+// Klik dot
+dots.forEach((dot,index)=>{
+
+    dot.addEventListener("click",()=>{
+
+        showSlide(index);
+
+    });
+
+});
+
+// Auto slide
+setInterval(()=>{
+
+    current++;
+
+    if(current >= slides.length){
+        current = 0;
+    }
+
+    showSlide(current);
+
+},4000);
+
+showSlide(0);
+
+const slider = document.querySelector(".banner-slider");
+
+let startX = 0;
+let endX = 0;
+
+slider.addEventListener("touchstart",(e)=>{
+    startX = e.touches[0].clientX;
+});
+
+slider.addEventListener("touchend",(e)=>{
+    endX = e.changedTouches[0].clientX;
+
+    if(startX - endX > 50){
+        // geser kiri
+        current++;
+        if(current >= slides.length){
+            current = 0;
+        }
+        showSlide(current);
+    }
+
+    if(endX - startX > 50){
+        // geser kanan
+        current--;
+        if(current < 0){
+            current = slides.length - 1;
+        }
+        showSlide(current);
+    }
+});
 function toggleMenu(){
 
 document
@@ -382,5 +446,18 @@ window.addEventListener(
 });
 
 </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2527385325235137"
+     crossorigin="anonymous"></script>
+<!-- Display -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2527385325235137"
+     data-ad-slot="6629257601"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 </body>
-</html>
+  </html>
+  
