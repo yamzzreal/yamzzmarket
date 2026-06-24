@@ -13,6 +13,8 @@ const API_URL =
 // =========================
 // AMBIL DATA
 // =========================
+let allProducts = [];
+let currentCategory = "all";
 
 async function getData() {
 
@@ -102,9 +104,11 @@ if(title){
 
 // Produk
 
-renderProducts(
-    data.products || []
-);
+allProducts = data.products || [];
+
+generateCategories();
+
+renderProducts(allProducts);
 
 }
 
@@ -246,8 +250,8 @@ products.forEach(product => {
     <div class="product-top">
 
         <span class="badge-game">
-            Free Fire
-        </span>
+    ${product.category || "Game"}
+</span>
 
         <span class="badge-ready">
             ${product.status}
@@ -307,31 +311,113 @@ products.forEach(product => {
 }
 
 // =========================
+// KATEGORI PRODUK 
+// =========================
+function generateCategories() {
+
+const container =
+document.getElementById(
+"categoryFilter"
+);
+
+const categories = [
+"all",
+...new Set(
+allProducts.map(
+p => p.category || "Lainnya"
+)
+)
+];
+
+container.innerHTML = "";
+
+categories.forEach(cat => {
+
+const btn =
+document.createElement(
+"button"
+);
+
+btn.className =
+"cat-btn";
+
+if(cat === "all")
+btn.classList.add(
+"active"
+);
+
+btn.textContent =
+cat === "all"
+? "Semua"
+: cat;
+
+btn.onclick = () => {
+
+document
+.querySelectorAll(".cat-btn")
+.forEach(b =>
+b.classList.remove(
+"active"
+)
+);
+
+btn.classList.add(
+"active"
+);
+
+currentCategory = cat;
+
+const filtered =
+currentCategory === "all"
+? allProducts
+: allProducts.filter(
+p => p.category === currentCategory
+);
+
+renderProducts(filtered);
+
+};
+
+container.appendChild(
+btn
+);
+
+});
+
+}
+// =========================
 // CARI PRODUK
 // =========================
 
-async function searchProduct(keyword){
+function searchProduct(keyword){
 
-const data = await getData();
-
-if(!data) return;
-
-const products =
-data.products.filter(item =>
-
-    item.description
-    .toLowerCase()
-    .includes(
-        keyword.toLowerCase()
-    ) ||
-    item.price
-    .toLowerCase()
-    .includes(
-        keyword.toLowerCase()
-    )
+let filtered =
+currentCategory === "all"
+? allProducts
+: allProducts.filter(
+p => p.category === currentCategory
 );
 
-renderProducts(products);
+filtered = filtered.filter(item =>
+
+(item.title || "")
+.toLowerCase()
+.includes(keyword.toLowerCase())
+
+||
+
+(item.description || "")
+.toLowerCase()
+.includes(keyword.toLowerCase())
+
+||
+
+String(item.price)
+.includes(keyword)
+
+);
+
+renderProducts(filtered);
 
 }
 
