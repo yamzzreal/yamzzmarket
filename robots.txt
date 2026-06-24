@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.yamzzoffc.my.id/sitemap.xml
+Sitemap: https://yamzzoffc.my.id/sitemap.xml
