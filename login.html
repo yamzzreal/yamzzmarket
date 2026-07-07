@@ -661,13 +661,20 @@ toggle.classList.add("fa-eye");
 
 };
 
-  function forgotPassword(){
+function forgotPassword(){
 
-    alert(
-        "Silakan hubungi Owner untuk melakukan reset password."
+    const nomor = "62881024256129";
+
+    const pesan = encodeURIComponent(
+        "Halo Admin, saya lupa password login Admin Panel Yamzz Market."
     );
 
-  }
+    window.open(
+        `https://wa.me/${nomor}?text=${pesan}`,
+        "_blank"
+    );
+
+}
   
 function showError(text){
 
