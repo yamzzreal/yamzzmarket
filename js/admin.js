@@ -701,6 +701,7 @@ async function addTestimonial(){
         alert("Gagal menambahkan testimoni.");
 
     }
+}
 
 async function deleteTestimonial(index){
 
