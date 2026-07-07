@@ -320,8 +320,9 @@ background-position:-200% 0;
 .products,
 #testimoniList{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
     gap:20px;
+    align-items:start;
 }
 
 .product{
@@ -359,24 +360,18 @@ background-position:-200% 0;
     margin:15px 0;
 }
 
-.badge-game,
-.badge-ready{
-    padding:8px 16px;
-    border-radius:999px;
-    font-size:13px;
-    font-weight:600;
-}
-
 .badge-game{
-    background:#50367f;
-    color:#79d7ff;
+    background:#55367d;
 }
 
 .badge-ready{
-    background:#50367f;
-    color:#79d7ff;
+    background:#1b8d5a;
+    color:#fff;
 }
 
+.badge-ready.sold{
+    background:#b22222;
+    }
 .product-title{
     font-size:22px;
     font-weight:700;
@@ -411,16 +406,19 @@ background-position:-200% 0;
     font-weight:700;
 }
 
-.buy-btn{
-    background:#4cc9ff;
-    color:#fff;
-    border:none;
+.buy-btn,
+.detail-btn{
+    transition:.25s;
+    cursor:pointer;
 }
 
-.detail-btn{
-    background:transparent;
-    border:2px solid #4cc9ff;
-    color:#fff;
+.buy-btn:hover{
+    transform:translateY(-2px);
+}
+
+.detail-btn:hover{
+    background:#4cc9ff;
+    color:#08173a;
 }
 
 #editTestiModal{
