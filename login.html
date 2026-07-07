@@ -605,7 +605,9 @@ Login
 
 </label>
 
-<a href="#" class="forgot">
+<a href="#" class="forgot" onclick="forgotPassword()">
+Lupa Password?
+</a>
 
 Lupa Password?
 
@@ -661,6 +663,14 @@ toggle.classList.add("fa-eye");
 
 };
 
+  function forgotPassword(){
+
+    alert(
+        "Silakan hubungi Owner untuk melakukan reset password."
+    );
+
+  }
+  
 function showError(text){
 
 const box =
