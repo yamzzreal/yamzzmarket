@@ -22,19 +22,51 @@ body{
     background:#061226;
 }
 
-.sidebar{
-    width:250px;
-    position:fixed;
-    top:0;
-    left:0;
-    bottom:0;
-    background:#08173a;
+    .admin-container{
+    margin-left:0;
     padding:20px;
+    }
+.top-nav{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding:15px;
+    margin-bottom:25px;
+
+    background:#08173a;
+    border-radius:20px;
+
+    scrollbar-width:none;
 }
 
-.admin-container{
-    margin-left:270px;
-    padding:25px;
+.top-nav::-webkit-scrollbar{
+    display:none;
+}
+
+.top-nav a{
+    min-width:120px;
+    height:55px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+
+    color:#9db6ff;
+    background:#102347;
+
+    border-radius:18px;
+
+    text-decoration:none;
+    font-weight:700;
+
+    transition:.25s;
+}
+
+.top-nav a:hover,
+.top-nav a.active{
+    background:#4cc9ff;
+    color:#08173a;
 }
 
 .admin-header{
@@ -582,27 +614,32 @@ background-position:-200% 0;
 
 <div class="admin-container">
 
-<div class="sidebar">
+<div class="top-nav">
 
-<a onclick="showPage('dashboard')">
-Dashboard
-</a>
+    <a class="active" onclick="showPage('dashboard')">
+        <i class="fa-solid fa-chart-line"></i>
+        Dashboard
+    </a>
 
-<a onclick="showPage('setting')">
-setting
-</a>
+    <a onclick="showPage('produk')">
+        <i class="fa-solid fa-box"></i>
+        Produk
+    </a>
 
-<a onclick="showPage('produk')">
-Produk
-</a>
+    <a onclick="showPage('kategori')">
+        <i class="fa-solid fa-layer-group"></i>
+        Kategori
+    </a>
 
-<a onclick="showPage('testimoni')">
-Testimoni
-</a>
+    <a onclick="showPage('testimoni')">
+        <i class="fa-solid fa-star"></i>
+        Testimoni
+    </a>
 
-<a onclick="showPage('kategori')">
-Kategori
-</a>
+    <a onclick="showPage('setting')">
+        <i class="fa-solid fa-gear"></i>
+        Setting
+    </a>
 
 </div>
 
