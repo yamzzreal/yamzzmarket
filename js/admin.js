@@ -449,110 +449,64 @@ alert(
 // =========================
 
 async function addProduct(){
+async function addProduct(){
 
-const title =
-document.getElementById(
-"title"
-).value;
+    showLoading("Sedang menambahkan produk...");
 
-const description =
-document.getElementById(
-"description"
-).value;
+    try{
 
-const price =
-document.getElementById(
-"price"
-).value;
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+        const price = document.getElementById("price").value;
+        const category = document.getElementById("category").value;
+        const file = document.getElementById("imageFile").files[0];
 
-const category =
-document.getElementById(
-"category"
-).value;
+        if(!file){
+            hideLoading();
+            alert("Pilih gambar");
+            return;
+        }
 
-const file =
-document.getElementById(
-"imageFile"
-).files[0];
+        const image = await uploadToCloudinary(file);
 
-if(!file){
-alert("Pilih gambar");
-return;
-}
+        if(!image){
+            hideLoading();
+            alert("Upload gambar gagal");
+            return;
+        }
 
-let image;
+        websiteData.products.push({
+            id: Date.now(),
+            title,
+            description,
+            price,
+            category,
+            image,
+            status: "READY",
+            whatsapp: websiteData.settings.whatsapp
+        });
 
-try{
+        await saveData(websiteData);
 
-    image =
-    await uploadToCloudinary(file);
+        document.getElementById("title").value = "";
+        document.getElementById("description").value = "";
+        document.getElementById("price").value = "";
+        document.getElementById("imageFile").value = "";
+        document.getElementById("category").value = "";
 
-    if(!image){
-        throw new Error("Upload gagal");
+        renderAdminProducts();
+        updateDashboard();
+
+        hideLoading();
+        alert("Produk berhasil ditambahkan.");
+
+    }catch(err){
+
+        hideLoading();
+        console.error(err);
+        alert("Gagal menambahkan produk.");
+
     }
-
-}catch(err){
-
-    alert("Upload gambar gagal");
-    return;
-
-}
-
-if(
-    !title ||
-    !description ||
-    !price ||
-    !image ||
-    !category
-){
-    alert(
-    "Lengkapi semua data"
-    );
-    return;
-}
-
-websiteData.products.push({
-id:Date.now(),
-title,
-description,
-price,
-category,
-image,
-status:"READY",
-whatsapp:websiteData.settings.whatsapp
-});
-
-await saveData(
-    websiteData
-);
-
-document.getElementById(
-"title"
-).value = "";
-
-document.getElementById(
-"description"
-).value = "";
-
-document.getElementById(
-"price"
-).value = "";
-
-document.getElementById(
-"imageFile"
-).value = "";
-
-document.getElementById(
-"category"
-).value = "";
-
-renderAdminProducts();
-
-updateDashboard();
-
-alert(
-"Produk berhasil ditambahkan"
-);
 
 }
 
