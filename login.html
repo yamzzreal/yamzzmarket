@@ -5,227 +5,629 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Login Admin - Yamzz Market</title>
+<title>Yamzz Market • Admin Login</title>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Poppins",sans-serif;
+}
+
 body{
 
-    min-height:100vh;
+height:100vh;
 
-    display:flex;
+display:flex;
+justify-content:center;
+align-items:center;
 
-    justify-content:center;
+overflow:hidden;
 
-    align-items:center;
+background:
+linear-gradient(
+135deg,
+#040b17,
+#081a3b,
+#0d2858
+);
 
-    background:
-    linear-gradient(
-    180deg,
-    #061226,
-    #0b1e3f
-    );
+position:relative;
+
+}
+
+body::before{
+
+content:"";
+
+position:absolute;
+
+width:450px;
+height:450px;
+
+background:#37c8ff40;
+
+border-radius:50%;
+
+top:-150px;
+right:-150px;
+
+filter:blur(120px);
+
+}
+
+body::after{
+
+content:"";
+
+position:absolute;
+
+width:350px;
+height:350px;
+
+background:#006dff30;
+
+border-radius:50%;
+
+bottom:-120px;
+left:-120px;
+
+filter:blur(120px);
 
 }
 
 .login-box{
 
-    width:100%;
-    max-width:420px;
+position:relative;
 
-    padding:35px;
+z-index:5;
 
-    border-radius:30px;
+width:100%;
+max-width:430px;
 
-    background:
-    linear-gradient(
-    180deg,
-    #08173a,
-    #06102a
-    );
+padding:40px;
 
-    border:1px solid
-    rgba(255,255,255,.08);
+border-radius:28px;
 
-    box-shadow:
-    0 20px 60px
-    rgba(0,0,0,.35);
+background:
+rgba(8,23,58,.88);
+
+backdrop-filter:blur(25px);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+
+0 30px 80px rgba(0,0,0,.45),
+0 0 40px rgba(76,201,255,.15);
+
+animation:popup .5s ease;
+
+}
+
+@keyframes popup{
+
+from{
+
+opacity:0;
+transform:translateY(30px) scale(.95);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0) scale(1);
+
+}
 
 }
 
 .logo{
 
-    display:flex;
+display:flex;
+flex-direction:column;
+align-items:center;
 
-    align-items:center;
-
-    gap:15px;
-
-    margin-bottom:25px;
+margin-bottom:30px;
 
 }
 
 .logo-icon{
 
-    width:65px;
-    height:65px;
+width:90px;
+height:90px;
 
-    border-radius:18px;
+border-radius:24px;
 
-    background:
-    linear-gradient(
-    135deg,
-    #4cc9ff,
-    #77e0ff
-    );
+display:flex;
+justify-content:center;
+align-items:center;
 
-}
+background:
 
-.logo-text h2{
+linear-gradient(
+135deg,
+#45c9ff,
+#79e1ff
+);
 
-    font-size:30px;
+font-size:38px;
 
-}
+color:#00111e;
 
-.logo-text p{
+box-shadow:
 
-    color:#a8b7d1;
+0 0 35px
+rgba(69,201,255,.45);
 
-}
-
-.input{
-
-    width:100%;
-
-    padding:15px;
-
-    border:none;
-
-    border-radius:15px;
-
-    background:#102347;
-
-    color:white;
-
-    outline:none;
+margin-bottom:18px;
 
 }
 
-.login-btn{
+.logo h2{
 
-    width:100%;
+font-size:32px;
 
-    padding:15px;
+font-weight:800;
 
-    border:none;
-
-    border-radius:15px;
-
-    background:#4cc9ff;
-
-    color:#001321;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    margin-top:15px;
+color:white;
 
 }
 
-.login-btn:hover{
+.logo p{
 
-    opacity:.9;
+margin-top:6px;
+
+color:#9fb8e5;
+
+font-size:15px;
 
 }
 
 .error{
 
-    display:none;
+display:none;
 
-    margin-bottom:15px;
+margin-bottom:18px;
 
-    padding:12px;
+padding:14px;
 
-    border-radius:12px;
+border-radius:15px;
 
-    background:
-    rgba(255,80,80,.15);
+background:#ff3b3b22;
 
-    color:#ff8080;
+border:1px solid #ff5b5b55;
+
+color:#ff9b9b;
+
+font-size:14px;
+
+text-align:center;
+
+}
+
+.input-group{
+
+position:relative;
+
+margin-bottom:18px;
+
+}
+
+.input-group i{
+
+position:absolute;
+
+left:18px;
+
+top:50%;
+
+transform:translateY(-50%);
+
+color:#48c8ff;
+
+font-size:18px;
+
+}
+
+.input{
+
+width:100%;
+
+height:58px;
+
+padding-left:50px;
+padding-right:50px;
+
+border:none;
+
+outline:none;
+
+border-radius:16px;
+
+background:#102347;
+
+color:white;
+
+font-size:15px;
+
+transition:.25s;
+
+}
+
+.input:focus{
+
+background:#17315d;
+
+box-shadow:
+
+0 0 0 2px #4cc9ff55;
+
+}
+
+.toggle-password{
+
+position:absolute;
+
+right:18px;
+
+top:50%;
+
+transform:translateY(-50%);
+
+cursor:pointer;
+
+color:#8fb8ff;
+
+}
+
+.login-btn{
+
+width:100%;
+
+height:58px;
+
+border:none;
+
+border-radius:16px;
+
+margin-top:8px;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+background:
+
+linear-gradient(
+135deg,
+#3fc9ff,
+#67dcff
+);
+
+color:#001421;
+
+transition:.25s;
+
+}
+
+.login-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+
+0 15px 35px rgba(76,201,255,.35);
 
 }
 
 .footer{
 
-    margin-top:20px;
+margin-top:24px;
 
-    text-align:center;
+text-align:center;
 
-    color:#a8b7d1;
+font-size:13px;
 
-    font-size:14px;
+color:#7f97bf;
 
 }
 
+.loading{
+
+display:none;
+
+margin-top:18px;
+
+text-align:center;
+
+color:#8eb8ff;
+
+}
+
+.spinner{
+
+width:40px;
+height:40px;
+
+margin:auto;
+
+border-radius:50%;
+
+border:4px solid rgba(255,255,255,.15);
+
+border-top:4px solid #48c8ff;
+
+animation:spin .8s linear infinite;
+
+margin-bottom:10px;
+
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+@media(max-width:500px){
+
+.login-box{
+
+margin:20px;
+
+padding:30px;
+
+}
+
+.logo-icon{
+
+width:75px;
+height:75px;
+
+font-size:30px;
+
+}
+
+.logo h2{
+
+font-size:28px;
+
+}
+
+}
+
+.remember-row{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-top:18px;
+
+margin-bottom:10px;
+
+}
+
+.remember{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+color:#9fb8e5;
+
+font-size:14px;
+
+cursor:pointer;
+
+}
+
+.remember input{
+
+accent-color:#4cc9ff;
+
+width:17px;
+
+height:17px;
+
+}
+
+.forgot{
+
+color:#4cc9ff;
+
+font-size:14px;
+
+text-decoration:none;
+
+transition:.25s;
+
+}
+
+.forgot:hover{
+
+opacity:.8;
+
+}
+
+.login-box{
+
+animation:floatCard 4s ease-in-out infinite;
+
+}
+
+@keyframes floatCard{
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-6px);
+
+}
+
+}
+
+.logo-icon{
+
+animation:glow 2s infinite alternate;
+
+}
+
+@keyframes glow{
+
+from{
+
+box-shadow:0 0 15px #4cc9ff55;
+
+}
+
+to{
+
+box-shadow:
+
+0 0 35px #4cc9ff,
+
+0 0 60px #4cc9ff55;
+
+}
+
+}
+
+.login-btn:active{
+
+transform:scale(.97);
+
+}
+
+.input::placeholder{
+
+color:#7da0d7;
+
+}
 </style>
 
 </head>
+
 <body>
 
 <div class="login-box">
 
-    <div class="logo">
+<div class="logo">
 
-        <div class="logo-icon"></div>
+<div class="logo-icon">
+<i class="fa-solid fa-store"></i>
+</div>
 
-        <div class="logo-text">
+<h2>Yamzz Market</h2>
 
-            <h2>Yamzz Market</h2>
+<p>Secure Admin Dashboard</p>
 
-            <p>Admin Panel Login</p>
+</div>
 
-        </div>
+<div class="error" id="errorBox">
 
-    </div>
+Username atau Password salah
 
-    <div
-    id="errorBox"
-    class="error">
+</div>
 
-        Username atau Password salah
+<div class="input-group">
 
-    </div>
+<i class="fa-solid fa-user"></i>
 
-    <input
-    type="text"
-    id="username"
-    class="input"
-    placeholder="Username">
+<input
+id="username"
+class="input"
+type="text"
+placeholder="Username">
 
-    <br><br>
+</div>
 
-    <input
-    type="password"
-    id="password"
-    class="input"
-    placeholder="Password">
+<div class="input-group">
 
-    <button
-    class="login-btn"
-    onclick="login()">
+<i class="fa-solid fa-lock"></i>
 
-        Login
+<input
+id="password"
+class="input"
+type="password"
+placeholder="Password">
 
-    </button>
+<i
+class="fa-solid fa-eye toggle-password"
+id="togglePassword"></i>
 
-    <div class="footer">
+</div>
 
-        © 2026 Yamzz Market
+<button
+class="login-btn"
+onclick="login()">
 
-    </div>
+<i class="fa-solid fa-right-to-bracket"></i>
+
+Login
+
+</button>
+
+<div class="remember-row">
+
+<label class="remember">
+
+<input type="checkbox" id="remember">
+
+<span>Remember Me</span>
+
+</label>
+
+<a href="#" class="forgot">
+
+Lupa Password?
+
+</a>
+
+</div>
+
+<div
+class="loading"
+id="loading">
+
+<div class="spinner"></div>
+
+Memverifikasi akun...
+
+</div>
+
+<div class="footer">
+
+© 2026 Yamzz Market
+
+</div>
 
 </div>
 
@@ -233,65 +635,197 @@ body{
 
 <script>
 
-async function login(){
+const password =
+document.getElementById("password");
 
-    const username =
-    document.getElementById(
-    "username"
-    ).value;
+const toggle =
+document.getElementById("togglePassword");
 
-    const password =
-    document.getElementById(
-    "password"
-    ).value;
+toggle.onclick = () => {
 
-    const data =
-    await getData();
+if(password.type === "password"){
 
-    if(!data){
+password.type = "text";
 
-        alert(
-        "Gagal mengambil data"
-        );
+toggle.classList.remove("fa-eye");
+toggle.classList.add("fa-eye-slash");
 
-        return;
+}else{
 
-    }
+password.type = "password";
 
-    if(
-
-        username ===
-        data.settings.admin.username
-
-        &&
-
-        password ===
-        data.settings.admin.password
-
-    ){
-
-        localStorage.setItem(
-        "yamzz_admin",
-        "true"
-        );
-
-        window.location.href =
-        "admin.html";
-
-    }else{
-
-        document.getElementById(
-        "errorBox"
-        ).style.display =
-        "block";
-
-    }
+toggle.classList.remove("fa-eye-slash");
+toggle.classList.add("fa-eye");
 
 }
 
-document.addEventListener(
-"keydown",
-(e)=>{
+};
+
+function showError(text){
+
+const box =
+document.getElementById("errorBox");
+
+box.innerText = text;
+
+box.style.display = "block";
+
+box.animate([
+
+{
+opacity:0,
+transform:"translateY(-10px)"
+},
+
+{
+opacity:1,
+transform:"translateY(0)"
+}
+
+],{
+
+duration:250
+
+});
+
+}
+
+function hideError(){
+
+document.getElementById(
+"errorBox"
+).style.display = "none";
+
+}
+
+const loginBtn =
+document.querySelector(".login-btn");
+
+loginBtn.addEventListener("mousemove",(e)=>{
+
+const x =
+e.offsetX;
+
+const y =
+e.offsetY;
+
+loginBtn.style.background=
+
+`radial-gradient(circle at ${x}px ${y}px,#8be8ff,#4cc9ff)`;
+
+});
+
+loginBtn.addEventListener("mouseleave",()=>{
+
+loginBtn.style.background=
+
+"linear-gradient(135deg,#3fc9ff,#67dcff)";
+
+});
+
+async function login(){
+
+hideError();
+
+const btn =
+document.querySelector(".login-btn");
+
+const loading =
+document.getElementById("loading");
+
+const username =
+document.getElementById("username").value.trim();
+
+const password =
+document.getElementById("password").value;
+
+if(username===""){
+
+showError("Username wajib diisi.");
+
+return;
+
+}
+
+if(password===""){
+
+showError("Password wajib diisi.");
+
+return;
+
+}
+
+btn.disabled = true;
+
+btn.style.opacity=".7";
+
+loading.style.display="block";
+
+try{
+
+const data =
+await getData();
+
+if(!data){
+
+throw new Error();
+
+}
+
+if(
+
+username === data.settings.admin.username &&
+
+password === data.settings.admin.password
+
+){
+
+localStorage.setItem(
+"yamzz_admin",
+"true"
+);
+
+btn.innerHTML =
+'<i class="fa-solid fa-circle-check"></i> Berhasil';
+
+setTimeout(()=>{
+
+window.location.href =
+"admin.html";
+
+},800);
+
+}else{
+
+showError(
+"Username atau Password salah."
+);
+
+btn.disabled=false;
+
+btn.style.opacity="1";
+
+loading.style.display="none";
+
+}
+
+}catch(e){
+
+showError(
+"Gagal mengambil data server."
+);
+
+btn.disabled=false;
+
+btn.style.opacity="1";
+
+loading.style.display="none";
+
+}
+
+}
+
+document.addEventListener("keydown",(e)=>{
 
 if(e.key==="Enter"){
 
@@ -300,6 +834,12 @@ login();
 }
 
 });
+
+if(localStorage.getItem("yamzz_admin")){
+
+window.location.href="admin.html";
+
+}
 
 </script>
 
