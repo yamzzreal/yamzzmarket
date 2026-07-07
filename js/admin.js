@@ -122,6 +122,15 @@ updateDashboard();
 
 }
 
+function showLoading(text = "Sedang memproses..."){
+    document.getElementById("loadingText").innerText = text;
+    document.getElementById("loadingOverlay").classList.add("show");
+}
+
+function hideLoading(){
+    document.getElementById("loadingOverlay").classList.remove("show");
+}
+
 async function uploadToCloudinary(file){
 
     try{
@@ -448,7 +457,6 @@ alert(
 // TAMBAH PRODUK
 // =========================
 
-async function addProduct(){
 async function addProduct(){
 
     showLoading("Sedang menambahkan produk...");
