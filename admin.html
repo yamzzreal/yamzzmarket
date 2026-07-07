@@ -704,10 +704,10 @@ background-position:-200% 0;
 </a>
 
     <div style="margin-top:auto;">
-    <a href="login.html">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <span>Logout</span>
-    </a>
+    <a href="#" onclick="logout()">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    <span>Logout</span>
+</a>
     </div>
 </div>
 
@@ -1117,6 +1117,14 @@ accept="image/*">
 <script src="js/jsonbin.js"></script>
 <script src="js/admin.js"></script>
 <script>
+    function logout(){
+
+    localStorage.removeItem("yamzz_admin");
+
+    window.location.href = "login.html";
+
+    }
+    
     function showLoading(text = "Sedang memproses..."){
     document.getElementById("loadingText").innerText = text;
     document.getElementById("loadingOverlay").classList.add("show");
