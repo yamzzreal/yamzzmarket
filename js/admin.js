@@ -364,9 +364,9 @@ list.innerHTML += `
     ${product.category || "Tanpa Kategori"}
 </span>
 
-        <span class="badge-ready">
-            ${product.status || "ready"}
-        </span>
+        <span class="badge-ready ${product.status.toLowerCase()}">
+    ${product.status}
+</span>
 
     </div>
 
