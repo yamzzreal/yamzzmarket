@@ -22,7 +22,7 @@ body{
     background:#061226;
 }
 
-    .sidebar{
+.sidebar{
     position:fixed;
     left:0;
     top:0;
@@ -30,6 +30,28 @@ body{
     height:100vh;
     background:#08173a;
     padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.sidebar a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    height:55px;
+    padding:0 18px;
+    border-radius:16px;
+    color:#fff;
+    text-decoration:none;
+    background:transparent;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+    background:#143a80;
 }
 
 .admin-container{
@@ -362,7 +384,7 @@ background-position:-200% 0;
 
 .products{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
     gap:18px;
 }
 
@@ -505,13 +527,18 @@ background-position:-200% 0;
     transform:scale(1);
 }
 
-.dashboard-stats{
+@media(max-width:768px){
+    .dashboard-stats{
+        grid-template-columns:1fr;
+    }
+}
+
+    .dashboard-stats{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:15px;
     margin-bottom:25px;
-}
-
+    }
 .stat-card{
     background:linear-gradient(
     135deg,
@@ -576,14 +603,32 @@ background-position:-200% 0;
     transform:scale(1);
 }
 
-@media(max-width:768px){
+@media (max-width:768px){
 
-.admin-container{
-    padding:15px;
+.sidebar{
+    width:80px;
 }
 
-.dashboard-stats{
-    grid-template-columns:1fr;
+.sidebar a{
+    width:60px;
+    height:60px;
+    font-size:12px;
+    padding:8px;
+}
+
+.sidebar a span{
+    display:none; /* sembunyikan tulisan */
+}
+
+.sidebar a i{
+    font-size:22px;
+    margin:0;
+}
+
+.admin-container{
+    margin-left:90px;
+    width:calc(100% - 90px);
+    padding:15px;
 }
 
 }
@@ -602,12 +647,37 @@ background-position:-200% 0;
 
 <div class="sidebar">
 
-    <a onclick="showPage('dashboard')">Dashboard</a>
-    <a onclick="showPage('produk')">Produk</a>
-    <a onclick="showPage('kategori')">Kategori</a>
-    <a onclick="showPage('testimoni')">Testimoni</a>
-    <a onclick="showPage('setting')">Setting</a>
+<a onclick="showPage('dashboard', this)">
+    <i class="fa-solid fa-house"></i>
+    <span>Dashboard</span>
+</a>
 
+<a onclick="showPage('produk', this)">
+    <i class="fa-solid fa-box"></i>
+    <span>Produk</span>
+</a>
+
+<a onclick="showPage('kategori', this)">
+    <i class="fa-solid fa-layer-group"></i>
+    <span>Kategori</span>
+</a>
+
+<a onclick="showPage('testimoni', this)">
+    <i class="fa-solid fa-star"></i>
+    <span>Testimoni</span>
+</a>
+
+<a onclick="showPage('setting', this)">
+    <i class="fa-solid fa-gear"></i>
+    <span>Setting</span>
+</a>
+
+    <div style="margin-top:auto;">
+    <a href="login.html">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+    </a>
+    </div>
 </div>
 
     <div class="admin-container">
@@ -1006,7 +1076,7 @@ accept="image/*">
 function hideLoading(){
     document.getElementById("loadingOverlay").classList.remove("show");
     }
-  function showPage(pageId){
+  function showPage(pageId, el){
 
     document.querySelectorAll(".page").forEach(page=>{
         page.classList.remove("active");
@@ -1014,11 +1084,13 @@ function hideLoading(){
 
     document.getElementById(pageId).classList.add("active");
 
-    document.querySelectorAll(".top-nav a").forEach(btn=>{
+    document.querySelectorAll(".sidebar a").forEach(btn=>{
         btn.classList.remove("active");
     });
 
-    event.currentTarget.classList.add("active");
+    window.onload = () => {
+    showPage("dashboard", document.querySelector(".sidebar a"));
+};
 }
 
 // halaman pertama
@@ -1033,5 +1105,6 @@ showPage("dashboard");
     </div>
 </body>
     </html>
+
 
     
