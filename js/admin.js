@@ -643,94 +643,64 @@ container.innerHTML += `
 
 async function addTestimonial(){
 
-const title =
-document.getElementById(
-"testiTitle"
-).value;
+    showLoading("Sedang menambahkan testimoni...");
 
-const desc =
-document.getElementById(
-"testiDesc"
-).value;
+    try{
 
-const file =
-document.getElementById(
-"testiImageFile"
-).files[0];
+        const title = document.getElementById("testiTitle").value;
+        const desc = document.getElementById("testiDesc").value;
+        const file = document.getElementById("testiImageFile").files[0];
 
-if(!file){
-    alert("Pilih gambar");
-    return;
-}
+        if(!file){
+            hideLoading();
+            alert("Pilih gambar");
+            return;
+        }
 
-let image;
+        const image = await uploadToCloudinary(file);
 
-try{
+        if(!image){
+            hideLoading();
+            alert("Upload gambar gagal");
+            return;
+        }
 
-    image =
-    await uploadToCloudinary(file);
+        if(!title || !desc){
+            hideLoading();
+            alert("Lengkapi data");
+            return;
+        }
 
-    if(!image){
-        throw new Error("Upload gagal");
+        if(!websiteData.testimonials){
+            websiteData.testimonials = [];
+        }
+
+        websiteData.testimonials.push({
+            id: Date.now(),
+            title,
+            desc,
+            image
+        });
+
+        await saveData(websiteData);
+
+        renderTestimonials();
+        updateDashboard();
+
+        document.getElementById("testiTitle").value = "";
+        document.getElementById("testiDesc").value = "";
+        document.getElementById("testiImageFile").value = "";
+
+        hideLoading();
+        alert("Testimoni berhasil ditambahkan");
+
+    }catch(err){
+
+        hideLoading();
+        console.error(err);
+        alert("Gagal menambahkan testimoni.");
+
     }
-
-}catch(err){
-
-    alert("Upload gambar gagal");
-    return;
-
-}
-
-if(
-!title ||
-!desc ||
-!image
-){
-alert("Lengkapi data");
-return;
-}
-
-if(!websiteData.testimonials){
-websiteData.testimonials = [];
-}
-
-websiteData.testimonials.push({
-
-id: Date.now(),
-
-title,
-
-desc,
-
-image
-
-});
-
-await saveData(
-websiteData
-);
-
-renderTestimonials();
-
-updateDashboard();
-
-document.getElementById(
-"testiTitle"
-).value="";
-
-document.getElementById(
-"testiDesc"
-).value="";
-
-document.getElementById(
-"testiImageFile"
-).value="";
-
-alert(
-"Testimoni berhasil ditambahkan"
-);
-
-}
 
 async function deleteTestimonial(index){
 
