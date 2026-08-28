@@ -88,6 +88,9 @@ websiteData.testimonials = [];
 if(!websiteData.categories)
 websiteData.categories = [];
 
+if(!websiteData.transactions)
+websiteData.transactions = [];
+
 document.getElementById(
 "totalProducts"
 ).innerText =
@@ -118,6 +121,7 @@ renderAdminProducts();
 
 renderTestimonials();
 
+renderTransactions();
 updateDashboard();
 
 }
@@ -905,6 +909,80 @@ setTimeout(()=>{
 },250);
 
 }
+
+// =========================
+// TRANSAKSI PEMBAYARAN
+// =========================
+let transactionFilter = "all";
+
+function setTransactionFilter(filter){
+    transactionFilter = filter;
+    renderTransactions();
+}
+
+function transactionStats(){
+    const list = websiteData?.transactions || [];
+    const set = (id,val)=>{ const el=document.getElementById(id); if(el) el.innerText=val; };
+    set("trxTotal", list.length);
+    set("trxPending", list.filter(x=>x.status==="pending").length);
+    set("trxSuccess", list.filter(x=>x.status==="success").length);
+    set("trxRejected", list.filter(x=>x.status==="rejected").length);
+}
+
+function escapeTrx(value){
+    return String(value ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+
+function renderTransactions(){
+    const listEl=document.getElementById("transactionList");
+    if(!listEl) return;
+    const all=websiteData?.transactions || [];
+    transactionStats();
+    const list=transactionFilter==="all" ? all : all.filter(x=>x.status===transactionFilter);
+    if(!list.length){listEl.innerHTML='<div class="empty-trx">Belum ada transaksi pada kategori ini.</div>';return;}
+    listEl.innerHTML=list.map(t=>{
+        const c=t.customer||{},p=t.product||{},pay=t.payment||{};
+        const statusText={pending:"PENDING",success:"DANA MASUK",rejected:"DITOLAK"}[t.status]||t.status;
+        const date=t.createdAt?new Date(t.createdAt).toLocaleString("id-ID"):"-";
+        const action=t.status==="pending" ? `
+        <div class="transaction-actions">
+          <input class="transaction-note" id="trxnote-${escapeTrx(t.id)}" placeholder="Catatan admin / alasan penolakan">
+          <button class="edit-btn" onclick="confirmTransaction('${escapeTrx(t.id)}')"><i class="fa-solid fa-check"></i> Dana Masuk</button>
+          <button class="delete-btn" onclick="rejectTransaction('${escapeTrx(t.id)}')"><i class="fa-solid fa-xmark"></i> Tolak</button>
+        </div>` : `<div class="muted" style="margin-top:10px;color:#9db6ff;font-size:12px">${t.confirmedAt?"Diproses "+new Date(t.confirmedAt).toLocaleString("id-ID"):""}${t.adminNote?" • "+escapeTrx(t.adminNote):""}</div>`;
+        return `<div class="transaction-card"><div class="transaction-top"><div class="transaction-id">${escapeTrx(t.id)}</div><span class="trx-status trx-${escapeTrx(t.status)}">${statusText}</span></div><div class="transaction-grid"><div><div class="transaction-row">Nama <b>${escapeTrx(c.name||"-")}</b></div><div class="transaction-row">WhatsApp <b>${escapeTrx(c.whatsapp||"-")}</b></div><div class="transaction-row">Produk <b>${escapeTrx(p.name||"-")}</b></div><div class="transaction-row">Harga <b style="color:#4cc9ff">Rp ${Number(p.price||0).toLocaleString("id-ID")}</b></div><div class="transaction-row">Detail <b>${escapeTrx(p.detail||"-")}</b></div><div class="transaction-row">Waktu <b>${date}</b></div></div><div><div style="font-size:12px;color:#9db6ff;margin-bottom:7px">Bukti Pembayaran</div><div class="transaction-proof">${pay.proof?`<a href="${escapeTrx(pay.proof)}" target="_blank" rel="noopener"><img src="${escapeTrx(pay.proof)}" alt="Bukti pembayaran"></a>`:'<div style="padding:35px;text-align:center;color:#9db6ff">Tidak ada bukti</div>'}</div></div></div>${action}</div>`;
+    }).join("");
+}
+
+async function loadTransactions(){
+    try{
+        websiteData = await getData();
+        if(!websiteData) throw new Error("Data website tidak tersedia");
+        if(!Array.isArray(websiteData.transactions)) websiteData.transactions=[];
+        renderTransactions();
+        updateDashboard();
+    }catch(e){
+        const el=document.getElementById("transactionList");
+        if(el) el.innerHTML='<div class="empty-trx">Gagal memuat transaksi.</div>';
+        console.error(e);
+    }
+}
+
+async function updateTransaction(id,status){
+    const t=(websiteData.transactions||[]).find(x=>String(x.id)===String(id));
+    if(!t) return;
+    const noteEl=document.getElementById("trxnote-"+id);
+    const note=noteEl?noteEl.value.trim():"";
+    if(status==="rejected" && !note){alert("Isi alasan penolakan terlebih dahulu.");return;}
+    if(!confirm(status==="success"?"Yakin dana transaksi ini sudah masuk?":"Yakin ingin menolak transaksi ini?")) return;
+    t.status=status;t.confirmedAt=new Date().toISOString();t.confirmedBy="admin";t.adminNote=note;
+    showLoading("Menyimpan status transaksi...");
+    try{await saveData(websiteData);hideLoading();renderTransactions();alert("Status transaksi berhasil diperbarui.");}
+    catch(e){hideLoading();alert("Gagal menyimpan status transaksi: "+e.message)}
+}
+function confirmTransaction(id){return updateTransaction(id,"success")}
+function rejectTransaction(id){return updateTransaction(id,"rejected")}
+
 // =========================
 // LOGIN CHECK
 // =========================
