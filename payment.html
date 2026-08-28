@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Pembayaran • Yamzz Market</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+body{background:#061226}
+.payment-wrap{max-width:900px;margin:auto;padding:25px 18px 60px}
+.payment-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px}
+.payment-head h1{font-size:30px;font-weight:800}.payment-head span{color:#4cc9ff}
+.payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pay-card{background:linear-gradient(180deg,#08173a,#06102a);border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:22px}
+.section-title{font-size:18px;font-weight:800;margin-bottom:15px}.muted{color:#9db0d0;font-size:13px;line-height:1.7}
+.product-box{display:flex;gap:15px;align-items:center;background:#102347;border-radius:18px;padding:14px;margin-bottom:15px}.product-box img{width:82px;height:82px;border-radius:14px;object-fit:cover}.product-box h3{font-size:16px}.product-box .price{color:#4cc9ff;font-size:20px;font-weight:800;margin-top:5px}
+.qris-box{text-align:center;background:#fff;border-radius:18px;padding:12px;margin:15px auto;max-width:340px}.qris-box img{width:100%;display:block;border-radius:10px}.qris-note{text-align:center;color:#9db0d0;font-size:12px}
+.form-group{margin-bottom:14px}.form-group label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.payment-input{width:100%;background:#102347;border:1px solid rgba(255,255,255,.08);border-radius:13px;color:#fff;padding:13px;outline:none;font-family:Poppins}.payment-input:focus{border-color:#4cc9ff}.payment-input[readonly]{opacity:.8}
+.file-label{display:block;border:1px dashed #4cc9ff55;background:#102347;border-radius:14px;padding:18px;text-align:center;cursor:pointer;color:#4cc9ff;font-weight:700;font-size:13px}.file-label input{display:none}.proof-preview{display:none;margin-top:12px}.proof-preview img{width:100%;max-height:330px;object-fit:contain;border-radius:13px;background:#000}
+.pay-btn{width:100%;border:0;border-radius:14px;padding:14px;background:#4cc9ff;color:#061226;font-weight:800;font-family:Poppins;cursor:pointer}.pay-btn:disabled{opacity:.5;cursor:not-allowed}
+.result{display:none;text-align:center}.result-icon{font-size:55px;color:#39e58c;margin-bottom:10px}.trx{margin:15px 0;background:#102347;border-radius:13px;padding:14px;color:#4cc9ff;font-family:monospace;word-break:break-all}.back{color:#fff;text-decoration:none;background:#102347;padding:10px 14px;border-radius:12px;font-size:13px}
+.loading{display:none;position:fixed;inset:0;background:#000b;z-index:9999;align-items:center;justify-content:center}.loading-box{background:#08173a;padding:25px;border-radius:18px;text-align:center}.spinner{width:42px;height:42px;border:4px solid #ffffff22;border-top-color:#4cc9ff;border-radius:50%;animation:spin 1s linear infinite;margin:auto auto 12px}@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:760px){.payment-grid{grid-template-columns:1fr}.payment-head h1{font-size:24px}.payment-head{align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="loading" id="loading"><div class="loading-box"><div class="spinner"></div><div>Mengirim pembayaran...</div></div></div>
+<nav class="navbar"><div class="logo"><div class="logo-icon"></div><h2>Yamzz Market</h2></div><a href="index.html" class="back">← Kembali</a></nav>
+<main class="payment-wrap">
+<div class="payment-head"><h1>Pembayaran <span>Pesanan</span></h1></div>
+<div id="paymentContent">
+<div class="payment-grid">
+<section class="pay-card">
+<div class="section-title">Detail Pesanan</div>
+<div class="product-box"><img id="productImage" src="" alt="Produk"><div><h3 id="productTitle">Memuat...</h3><div class="price" id="productPrice">Rp 0</div></div></div>
+<div class="muted">Pastikan nama produk dan nominal sesuai sebelum melakukan pembayaran.</div>
+<div class="section-title" style="margin-top:22px">Bayar via QRIS</div>
+<div class="qris-box"><img src="assets/qris.png" alt="QRIS Yamzz Market" id="qrisImage"></div>
+<div class="qris-note">Scan QRIS di atas, lalu upload screenshot bukti pembayaran.</div>
+</section>
+<section class="pay-card">
+<div class="section-title">Informasi Pelanggan</div>
+<div class="form-group"><label>Nama Pelanggan</label><input class="payment-input" id="customerName" placeholder="Masukkan nama"></div>
+<div class="form-group"><label>Nomor WhatsApp</label><input class="payment-input" id="customerWhatsapp" inputmode="tel" placeholder="08xxxxxxxxxx"></div>
+<div class="form-group"><label>Produk</label><input class="payment-input" id="productInput" readonly></div>
+<div class="form-group"><label>Detail Produk / Catatan</label><textarea class="payment-input" id="productDetail" rows="4" placeholder="Contoh: ID akun, nickname, atau kebutuhan pengiriman"></textarea></div>
+<div class="form-group"><label>Bukti Pembayaran</label><label class="file-label"><input type="file" id="proofFile" accept="image/jpeg,image/png,image/webp"> <i class="fa-solid fa-cloud-arrow-up"></i> <span id="fileText"> Pilih bukti pembayaran</span></label><div class="proof-preview" id="proofPreview"><img id="proofImage" alt="Preview bukti"></div></div>
+<button class="pay-btn" id="submitBtn" onclick="submitPayment()"><i class="fa-solid fa-check"></i> Selesaikan Pembayaran</button>
+<p class="muted" style="text-align:center;margin-top:12px">Pembayaran akan diperiksa manual oleh admin. Jangan kirim bukti palsu.</p>
+</section>
+</div>
+</div>
+<div class="pay-card result" id="result"><div class="result-icon"><i class="fa-solid fa-circle-check"></i></div><div class="section-title">Pembayaran Berhasil Dikirim</div><p class="muted">Bukti pembayaran sudah masuk dan menunggu konfirmasi admin.</p><div class="trx" id="trxId"></div><p class="muted">Simpan ID transaksi ini.</p></div>
+</main>
+<script src="js/jsonbin.js"></script>
+<script>
+const params=new URLSearchParams(location.search);const productId=params.get('id');let selectedProduct=null;
+async function initPayment(){const data=await getData();if(!data||!Array.isArray(data.products)){document.getElementById('paymentContent').innerHTML='<div class="pay-card">Data produk gagal dimuat.</div>';return}selectedProduct=data.products.find(p=>String(p.id)===String(productId));if(!selectedProduct){document.getElementById('paymentContent').innerHTML='<div class="pay-card">Produk tidak ditemukan.</div>';return}document.getElementById('productTitle').textContent=selectedProduct.title;document.getElementById('productImage').src=selectedProduct.image;document.getElementById('productPrice').textContent='Rp '+Number(selectedProduct.price).toLocaleString('id-ID');document.getElementById('productInput').value=selectedProduct.title;document.getElementById('productDetail').value=selectedProduct.description||''}
+document.getElementById('proofFile').addEventListener('change',function(){const f=this.files[0];if(!f)return;if(f.size>3*1024*1024){alert('Ukuran bukti maksimal 3MB.');this.value='';return}document.getElementById('fileText').textContent=f.name;const r=new FileReader();r.onload=e=>{document.getElementById('proofImage').src=e.target.result;document.getElementById('proofPreview').style.display='block'};r.readAsDataURL(f)});
+function normalizeWA(v){let n=v.replace(/\D/g,'');if(n.startsWith('0'))n='62'+n.slice(1);return n}
+function trxId(){return 'YAM-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,7).toUpperCase()}
+async function uploadProof(file){const fd=new FormData();fd.append('file',file);fd.append('upload_preset','yamzzmarket');const res=await fetch('https://api.cloudinary.com/v1_1/dlutuixsc/image/upload',{method:'POST',body:fd});const data=await res.json();if(!res.ok||!data.secure_url)throw new Error(data?.error?.message||'Upload bukti gagal');return data.secure_url}
+async function submitPayment(){if(!selectedProduct)return;const name=document.getElementById('customerName').value.trim();const wa=document.getElementById('customerWhatsapp').value.trim();const detail=document.getElementById('productDetail').value.trim();const file=document.getElementById('proofFile').files[0];if(!name)return alert('Nama pelanggan wajib diisi.');if(normalizeWA(wa).length<9)return alert('Nomor WhatsApp tidak valid.');if(!detail)return alert('Detail produk wajib diisi.');if(!file)return alert('Upload bukti pembayaran terlebih dahulu.');document.getElementById('submitBtn').disabled=true;document.getElementById('loading').style.display='flex';try{const proofUrl=await uploadProof(file);const data=await getData();if(!data.transactions)data.transactions=[];const transaction={id:trxId(),status:'pending',customer:{name,whatsapp:normalizeWA(wa)},product:{id:selectedProduct.id,name:selectedProduct.title,price:Number(selectedProduct.price),detail},payment:{method:'QRIS',amount:Number(selectedProduct.price),proof:proofUrl},createdAt:new Date().toISOString(),confirmedAt:null,confirmedBy:null,adminNote:''};data.transactions.unshift(transaction);await saveData(data);document.getElementById('loading').style.display='none';document.getElementById('paymentContent').style.display='none';document.getElementById('result').style.display='block';document.getElementById('trxId').textContent=transaction.id}catch(e){console.error(e);alert('Gagal mengirim pembayaran: '+e.message);document.getElementById('submitBtn').disabled=false;document.getElementById('loading').style.display='none'}}
+initPayment();
+</script>
+</body></html>

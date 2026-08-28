@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Cek Status Transaksi • Yamzz Market</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#061226;
+    color:#fff;
+    font-family:Poppins,Arial,sans-serif;
+}
+
+.status-wrap{
+    max-width:850px;
+    margin:auto;
+    padding:30px 18px 60px;
+}
+
+.status-head{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.status-head h1{
+    margin:0;
+    font-size:30px;
+    font-weight:800;
+}
+
+.status-head h1 span{
+    color:#4cc9ff;
+}
+
+.status-head p{
+    color:#9db0d0;
+    font-size:13px;
+    margin-top:7px;
+}
+
+.status-card{
+    background:linear-gradient(
+        180deg,
+        #08173a,
+        #06102a
+    );
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:24px;
+
+    padding:22px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.25);
+}
+
+/* SEARCH */
+
+.search-title{
+    font-size:17px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+.search-desc{
+    color:#9db0d0;
+    font-size:12px;
+    line-height:1.6;
+    margin-bottom:15px;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+}
+
+.search-box input{
+    flex:1;
+
+    height:52px;
+
+    background:#102347;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:14px;
+
+    padding:0 16px;
+
+    color:#fff;
+
+    outline:none;
+
+    font-size:13px;
+}
+
+.search-box input:focus{
+    border-color:#4cc9ff;
+
+    box-shadow:
+        0 0 0 3px rgba(76,201,255,.08);
+}
+
+.search-box button{
+    width:130px;
+
+    border:0;
+
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        #4cc9ff,
+        #168cff
+    );
+
+    color:#fff;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.search-box button:hover{
+    transform:translateY(-1px);
+
+    filter:brightness(1.08);
+}
+
+.search-box button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+/* MESSAGE */
+
+.message{
+    display:none;
+
+    margin-top:15px;
+
+    padding:13px 15px;
+
+    border-radius:13px;
+
+    font-size:12px;
+
+    line-height:1.6;
+}
+
+.message.error{
+    display:block;
+
+    color:#ffcaca;
+
+    background:rgba(239,68,68,.08);
+
+    border:1px solid rgba(239,68,68,.18);
+}
+
+.message.info{
+    display:block;
+
+    color:#bdefff;
+
+    background:rgba(76,201,255,.08);
+
+    border:1px solid rgba(76,201,255,.18);
+}
+
+/* RESULT */
+
+.result{
+    display:none;
+
+    margin-top:20px;
+}
+
+.result.show{
+    display:block;
+}
+
+/* STATUS */
+
+.status-box{
+    padding:22px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    background:#0b1d38;
+
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.status-icon{
+    width:65px;
+    height:65px;
+
+    margin:0 auto 12px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:25px;
+
+    background:rgba(255,255,255,.05);
+}
+
+.status-title{
+    font-size:19px;
+    font-weight:800;
+}
+
+.status-desc{
+    margin-top:5px;
+
+    color:#9db0d0;
+
+    font-size:12px;
+}
+
+/* STATUS COLORS */
+
+.status-pending .status-icon{
+    color:#fbbf24;
+
+    background:rgba(251,191,36,.1);
+
+    border:1px solid rgba(251,191,36,.2);
+}
+
+.status-success .status-icon{
+    color:#22c55e;
+
+    background:rgba(34,197,94,.1);
+
+    border:1px solid rgba(34,197,94,.2);
+}
+
+.status-rejected .status-icon{
+    color:#ef4444;
+
+    background:rgba(239,68,68,.1);
+
+    border:1px solid rgba(239,68,68,.2);
+}
+
+/* DETAIL */
+
+.detail-card{
+    margin-top:15px;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    border:1px solid rgba(255,255,255,.07);
+
+    background:#08172f;
+}
+
+.detail-title{
+    padding:15px 17px;
+
+    font-size:15px;
+
+    font-weight:800;
+
+    background:#0d2142;
+}
+
+.detail-row{
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    padding:13px 17px;
+
+    border-top:1px solid rgba(255,255,255,.05);
+
+    font-size:12px;
+}
+
+.detail-label{
+    color:#8fa6c7;
+}
+
+.detail-value{
+    text-align:right;
+
+    font-weight:600;
+
+    max-width:65%;
+
+    word-break:break-word;
+}
+
+.price{
+    color:#4cc9ff;
+
+    font-size:14px;
+}
+
+/* REJECT NOTE */
+
+.admin-note{
+    margin-top:15px;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    background:rgba(239,68,68,.07);
+
+    border:1px solid rgba(239,68,68,.15);
+}
+
+.admin-note-title{
+    color:#ff7777;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    margin-bottom:5px;
+}
+
+.admin-note-text{
+    color:#ffd0d0;
+
+    font-size:12px;
+
+    line-height:1.6;
+}
+
+/* TIMELINE */
+
+.timeline{
+    margin-top:15px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    border:1px solid rgba(255,255,255,.07);
+
+    background:#08172f;
+}
+
+.timeline-title{
+    font-size:15px;
+
+    font-weight:800;
+
+    margin-bottom:18px;
+}
+
+.timeline-item{
+    position:relative;
+
+    display:flex;
+
+    gap:12px;
+
+    padding-bottom:20px;
+}
+
+.timeline-item:last-child{
+    padding-bottom:0;
+}
+
+.timeline-item:not(:last-child)::after{
+    content:"";
+
+    position:absolute;
+
+    left:9px;
+
+    top:21px;
+
+    width:2px;
+
+    height:calc(100% - 2px);
+
+    background:#213858;
+}
+
+.timeline-dot{
+    position:relative;
+
+    z-index:2;
+
+    flex:none;
+
+    width:20px;
+    height:20px;
+
+    border-radius:50%;
+
+    background:#162b48;
+
+    border:2px solid #385170;
+}
+
+.timeline-item.active .timeline-dot{
+    background:#4cc9ff;
+
+    border-color:#4cc9ff;
+
+    box-shadow:
+        0 0 12px rgba(76,201,255,.45);
+}
+
+.timeline-item.done .timeline-dot{
+    background:#22c55e;
+
+    border-color:#22c55e;
+}
+
+.timeline-item.rejected .timeline-dot{
+    background:#ef4444;
+
+    border-color:#ef4444;
+}
+
+.timeline-content{
+    flex:1;
+}
+
+.timeline-name{
+    font-size:12px;
+
+    font-weight:700;
+}
+
+.timeline-time{
+    color:#7187a8;
+
+    font-size:10px;
+
+    margin-top:3px;
+}
+
+/* ACTION */
+
+.action-row{
+    display:flex;
+
+    gap:10px;
+
+    margin-top:17px;
+}
+
+.action-btn{
+    flex:1;
+
+    height:45px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-decoration:none;
+
+    color:#fff;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    background:#102347;
+
+    cursor:pointer;
+}
+
+.action-btn.primary{
+    border:0;
+
+    background:linear-gradient(
+        135deg,
+        #4cc9ff,
+        #168cff
+    );
+}
+
+/* EMPTY */
+
+.empty{
+    display:none;
+
+    text-align:center;
+
+    padding:35px 20px;
+
+    margin-top:20px;
+
+    border-radius:18px;
+
+    border:1px dashed #243d61;
+
+    color:#8fa6c7;
+}
+
+.empty-icon{
+    font-size:30px;
+
+    margin-bottom:8px;
+}
+
+/* LOADING */
+
+.loading{
+    display:inline-block;
+
+    width:16px;
+    height:16px;
+
+    border:2px solid rgba(255,255,255,.35);
+
+    border-top-color:#fff;
+
+    border-radius:50%;
+
+    animation:spin .7s linear infinite;
+}
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .status-wrap{
+        padding:20px 12px 45px;
+    }
+
+    .status-head h1{
+        font-size:24px;
+    }
+
+    .status-card{
+        padding:17px;
+    }
+
+    .search-box{
+        flex-direction:column;
+    }
+
+    .search-box button{
+        width:100%;
+
+        height:48px;
+    }
+
+    .detail-row{
+        align-items:flex-start;
+    }
+
+    .detail-value{
+        max-width:55%;
+    }
+
+    .action-row{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="status-wrap">
+
+    <div class="status-head">
+
+        <h1>
+            Cek <span>Status Transaksi</span>
+        </h1>
+
+        <p>
+            Masukkan ID transaksi untuk melihat status pembayaran kamu.
+        </p>
+
+    </div>
+
+
+    <div class="status-card">
+
+        <div class="search-title">
+            ID Transaksi
+        </div>
+
+        <div class="search-desc">
+            Masukkan ID transaksi yang kamu dapat setelah mengirim bukti pembayaran.
+        </div>
+
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="transactionId"
+                placeholder="Contoh: YAM-ME6W..."
+                autocomplete="off"
+            >
+
+            <button
+                id="checkBtn"
+                onclick="checkTransaction()"
+            >
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Cek Status
+            </button>
+
+        </div>
+
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+
+        <!-- EMPTY -->
+
+        <div
+            id="empty"
+            class="empty"
+        >
+
+            <div class="empty-icon">
+                <i class="fa-solid fa-file-circle-xmark"></i>
+            </div>
+
+            <b>Transaksi tidak ditemukan</b>
+
+            <p>
+                Pastikan ID transaksi yang kamu masukkan sudah benar.
+            </p>
+
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div
+            id="result"
+            class="result"
+        >
+
+            <!-- STATUS -->
+
+            <div
+                id="statusBox"
+                class="status-box status-pending"
+            >
+
+                <div
+                    id="statusIcon"
+                    class="status-icon"
+                >
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+
+                <div
+                    id="statusTitle"
+                    class="status-title"
+                >
+                    Menunggu Konfirmasi
+                </div>
+
+                <div
+                    id="statusDesc"
+                    class="status-desc"
+                >
+                    Bukti pembayaran sedang menunggu konfirmasi admin.
+                </div>
+
+            </div>
+
+
+            <!-- DETAIL -->
+
+            <div class="detail-card">
+
+                <div class="detail-title">
+                    <i class="fa-solid fa-receipt"></i>
+                    Detail Transaksi
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        ID Transaksi
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="trxId"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Nama Pelanggan
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="trxName"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        WhatsApp
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="trxWhatsapp"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Produk
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="trxProduct"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Detail Produk
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="trxDetail"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Metode Pembayaran
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="trxMethod"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Total Pembayaran
+                    </span>
+
+                    <span
+                        class="detail-value price"
+                        id="trxAmount"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Dibuat
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="trxCreated"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="detail-row">
+
+                    <span class="detail-label">
+                        Konfirmasi
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="trxConfirmed"
+                    >
+                        -
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ADMIN NOTE -->
+
+            <div
+                id="adminNote"
+                class="admin-note"
+                style="display:none"
+            >
+
+                <div class="admin-note-title">
+                    <i class="fa-solid fa-circle-info"></i>
+                    Catatan Admin
+                </div>
+
+                <div
+                    id="adminNoteText"
+                    class="admin-note-text"
+                ></div>
+
+            </div>
+
+
+            <!-- TIMELINE -->
+
+            <div class="timeline">
+
+                <div class="timeline-title">
+                    <i class="fa-solid fa-route"></i>
+                    Status Pesanan
+                </div>
+
+
+                <div
+                    class="timeline-item done"
+                    id="stepCreated"
+                >
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-content">
+
+                        <div class="timeline-name">
+                            Transaksi Dibuat
+                        </div>
+
+                        <div
+                            class="timeline-time"
+                            id="timeCreated"
+                        >
+                            -
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="timeline-item"
+                    id="stepPayment"
+                >
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-content">
+
+                        <div class="timeline-name">
+                            Menunggu Konfirmasi Pembayaran
+                        </div>
+
+                        <div
+                            class="timeline-time"
+                            id="timePayment"
+                        >
+                            -
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="timeline-item"
+                    id="stepFinished"
+                >
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-content">
+
+                        <div class="timeline-name">
+                            Transaksi Selesai
+                        </div>
+
+                        <div
+                            class="timeline-time"
+                            id="timeFinished"
+                        >
+                            -
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTION -->
+
+            <div class="action-row">
+
+                <a
+                    href="index.html"
+                    class="action-btn primary"
+                >
+                    <i class="fa-solid fa-house"></i>
+                    &nbsp; Kembali ke Store
+                </a>
+
+                <button
+                    class="action-btn"
+                    onclick="resetPage()"
+                >
+                    <i class="fa-solid fa-rotate"></i>
+                    &nbsp; Cek Transaksi Lain
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div style="
+        text-align:center;
+        color:#506788;
+        font-size:10px;
+        margin-top:22px;
+    ">
+        © 2026 Yamzz Market
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==================================================
+   JSONBIN
+================================================== */
+
+const BIN_ID =
+"6a32e7b9da38895dfed22d14";
+
+const API_KEY =
+"$2a$10$QQTsW9lEiJrPCaC7VKkgH.SF8xR/Gn2/LbQ6lGp4yKxAFU9PsdCu.";
+
+const API_URL =
+`https://api.jsonbin.io/v3/b/${BIN_ID}`;
+
+
+/* ==================================================
+   ELEMENT
+================================================== */
+
+const input =
+document.getElementById("transactionId");
+
+const button =
+document.getElementById("checkBtn");
+
+const result =
+document.getElementById("result");
+
+const empty =
+document.getElementById("empty");
+
+const message =
+document.getElementById("message");
+
+
+/* ==================================================
+   GET DATA
+================================================== */
+
+async function getData(){
+
+    const response =
+        await fetch(
+            API_URL + "/latest",
+            {
+                method:"GET",
+
+                headers:{
+                    "X-Master-Key":
+                    API_KEY
+                }
+            }
+        );
+
+
+    if(!response.ok){
+
+        throw new Error(
+            "Gagal mengambil data transaksi."
+        );
+
+    }
+
+
+    const data =
+        await response.json();
+
+
+    return data.record;
+
+}
+
+
+/* ==================================================
+   CEK TRANSAKSI
+================================================== */
+
+async function checkTransaction(){
+
+    const id =
+        input.value.trim();
+
+
+    result.classList.remove("show");
+
+    empty.style.display =
+        "none";
+
+    hideMessage();
+
+
+    if(!id){
+
+        showMessage(
+            "Masukkan ID transaksi terlebih dahulu.",
+            "error"
+        );
+
+        input.focus();
+
+        return;
+
+    }
+
+
+    setLoading(true);
+
+
+    try{
+
+        const data =
+            await getData();
+
+
+        if(
+            !data ||
+            !Array.isArray(
+                data.transactions
+            )
+        ){
+
+            throw new Error(
+                "Data transaksi tidak tersedia."
+            );
+
+        }
+
+
+        const transaction =
+            data.transactions.find(
+                t =>
+                    String(t.id)
+                    .toLowerCase()
+                    ===
+                    id.toLowerCase()
+            );
+
+
+        if(!transaction){
+
+            empty.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        showTransaction(
+            transaction
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showMessage(
+            error.message ||
+            "Terjadi kesalahan saat mengecek transaksi.",
+            "error"
+        );
+
+    }finally{
+
+        setLoading(false);
+
+    }
+
+}
+
+
+/* ==================================================
+   SHOW TRANSACTION
+================================================== */
+
+function showTransaction(t){
+
+    result.classList.add("show");
+
+
+    const customer =
+        t.customer || {};
+
+    const product =
+        t.product || {};
+
+    const payment =
+        t.payment || {};
+
+
+    document.getElementById(
+        "trxId"
+    ).textContent =
+        t.id || "-";
+
+
+    document.getElementById(
+        "trxName"
+    ).textContent =
+        customer.name || "-";
+
+
+    document.getElementById(
+        "trxWhatsapp"
+    ).textContent =
+        maskWhatsapp(
+            customer.whatsapp || "-"
+        );
+
+
+    document.getElementById(
+        "trxProduct"
+    ).textContent =
+        product.name || "-";
+
+
+    document.getElementById(
+        "trxDetail"
+    ).textContent =
+        product.detail || "-";
+
+
+    document.getElementById(
+        "trxMethod"
+    ).textContent =
+        payment.method || "QRIS";
+
+
+    document.getElementById(
+        "trxAmount"
+    ).textContent =
+        formatRupiah(
+            payment.amount ||
+            product.price ||
+            0
+        );
+
+
+    document.getElementById(
+        "trxCreated"
+    ).textContent =
+        formatDate(
+            t.createdAt
+        );
+
+
+    document.getElementById(
+        "trxConfirmed"
+    ).textContent =
+        t.confirmedAt
+        ?
+        formatDate(
+            t.confirmedAt
+        )
+        :
+        "Belum dikonfirmasi";
+
+
+    updateStatus(t);
+
+
+    updateTimeline(t);
+
+
+    /*
+    ==============================================
+    ADMIN NOTE
+    ==============================================
+    */
+
+    const noteBox =
+        document.getElementById(
+            "adminNote"
+        );
+
+    const noteText =
+        document.getElementById(
+            "adminNoteText"
+        );
+
+
+    if(t.adminNote){
+
+        noteBox.style.display =
+            "block";
+
+        noteText.textContent =
+            t.adminNote;
+
+    }else{
+
+        noteBox.style.display =
+            "none";
+
+        noteText.textContent =
+            "";
+
+    }
+
+}
+
+
+/* ==================================================
+   STATUS
+================================================== */
+
+function updateStatus(t){
+
+    const box =
+        document.getElementById(
+            "statusBox"
+        );
+
+    const icon =
+        document.getElementById(
+            "statusIcon"
+        );
+
+    const title =
+        document.getElementById(
+            "statusTitle"
+        );
+
+    const desc =
+        document.getElementById(
+            "statusDesc"
+        );
+
+
+    box.className =
+        "status-box";
+
+
+    switch(t.status){
+
+        case "success":
+
+            box.classList.add(
+                "status-success"
+            );
+
+            icon.innerHTML =
+                '<i class="fa-solid fa-circle-check"></i>';
+
+            title.textContent =
+                "Pembayaran Diterima";
+
+            desc.textContent =
+                "Pembayaran kamu telah dikonfirmasi oleh admin.";
+
+            break;
+
+
+        case "rejected":
+
+            box.classList.add(
+                "status-rejected"
+            );
+
+            icon.innerHTML =
+                '<i class="fa-solid fa-circle-xmark"></i>';
+
+            title.textContent =
+                "Transaksi Ditolak";
+
+            desc.textContent =
+                "Transaksi kamu ditolak oleh admin.";
+
+            break;
+
+
+        default:
+
+            box.classList.add(
+                "status-pending"
+            );
+
+            icon.innerHTML =
+                '<i class="fa-solid fa-clock"></i>';
+
+            title.textContent =
+                "Menunggu Konfirmasi";
+
+            desc.textContent =
+                "Bukti pembayaran sedang menunggu konfirmasi admin.";
+
+            break;
+
+    }
+
+}
+
+
+/* ==================================================
+   TIMELINE
+================================================== */
+
+function updateTimeline(t){
+
+    const created =
+        document.getElementById(
+            "stepCreated"
+        );
+
+    const payment =
+        document.getElementById(
+            "stepPayment"
+        );
+
+    const finished =
+        document.getElementById(
+            "stepFinished"
+        );
+
+
+    created.className =
+        "timeline-item done";
+
+
+    payment.className =
+        "timeline-item";
+
+
+    finished.className =
+        "timeline-item";
+
+
+    document.getElementById(
+        "timeCreated"
+    ).textContent =
+        formatDate(
+            t.createdAt
+        );
+
+
+    document.getElementById(
+        "timePayment"
+    ).textContent =
+        t.confirmedAt
+        ?
+        formatDate(
+            t.confirmedAt
+        )
+        :
+        "Menunggu admin";
+
+
+    document.getElementById(
+        "timeFinished"
+    ).textContent =
+        t.status === "success"
+        ?
+        formatDate(
+            t.confirmedAt
+        )
+        :
+        t.status === "rejected"
+        ?
+        "Transaksi ditolak"
+        :
+        "Belum selesai";
+
+
+    if(t.status === "pending"){
+
+        payment.classList.add(
+            "active"
+        );
+
+    }
+
+
+    if(t.status === "success"){
+
+        payment.classList.add(
+            "done"
+        );
+
+        finished.classList.add(
+            "done"
+        );
+
+    }
+
+
+    if(t.status === "rejected"){
+
+        payment.classList.add(
+            "rejected"
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   FORMAT RUPIAH
+================================================== */
+
+function formatRupiah(value){
+
+    return new Intl.NumberFormat(
+        "id-ID",
+        {
+            style:"currency",
+            currency:"IDR",
+            maximumFractionDigits:0
+        }
+    ).format(
+        Number(value) || 0
+    );
+
+}
+
+
+/* ==================================================
+   FORMAT DATE
+================================================== */
+
+function formatDate(value){
+
+    if(!value){
+        return "-";
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "-";
+
+    }
+
+
+    return date.toLocaleString(
+        "id-ID",
+        {
+            day:"2-digit",
+            month:"long",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+        }
+    );
+
+}
+
+
+/* ==================================================
+   MASK WHATSAPP
+================================================== */
+
+function maskWhatsapp(number){
+
+    if(!number){
+        return "-";
+    }
+
+
+    const value =
+        String(number);
+
+
+    if(value.length <= 6){
+        return value;
+    }
+
+
+    return value.slice(0,4)
+        + "****"
+        + value.slice(-3);
+
+}
+
+
+/* ==================================================
+   RESET
+================================================== */
+
+function resetPage(){
+
+    input.value = "";
+
+    result.classList.remove(
+        "show"
+    );
+
+    empty.style.display =
+        "none";
+
+    hideMessage();
+
+    input.focus();
+
+}
+
+
+/* ==================================================
+   MESSAGE
+================================================== */
+
+function showMessage(
+    text,
+    type="info"
+){
+
+    message.textContent =
+        text;
+
+    message.className =
+        "message " + type;
+
+}
+
+
+function hideMessage(){
+
+    message.textContent =
+        "";
+
+    message.className =
+        "message";
+
+}
+
+
+/* ==================================================
+   LOADING
+================================================== */
+
+function setLoading(
+    loading
+){
+
+    button.disabled =
+        loading;
+
+
+    if(loading){
+
+        button.innerHTML =
+            '<span class="loading"></span>';
+
+    }else{
+
+        button.innerHTML =
+            '<i class="fa-solid fa-magnifying-glass"></i> Cek Status';
+
+    }
+
+}
+
+
+/* ==================================================
+   ENTER
+================================================== */
+
+input.addEventListener(
+    "keydown",
+    function(e){
+
+        if(
+            e.key === "Enter"
+        ){
+
+            checkTransaction();
+
+        }
+
+    }
+);
+
+
+/* ==================================================
+   AUTO CHECK URL
+==================================================
+
+Contoh:
+
+status.html?id=YAM-ME6W...
+
+================================================== */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const id =
+            params.get("id");
+
+
+        if(id){
+
+            input.value =
+                id;
+
+            checkTransaction();
+
+        }
+
+    }
+);
+
+
+/* ==================================================
+   AUTO REFRESH
+==================================================
+
+Kalau hasil transaksi sedang pending,
+cek ulang setiap 10 detik.
+
+================================================== */
+
+let autoRefresh = null;
+
+
+function startAutoRefresh(){
+
+    clearInterval(
+        autoRefresh
+    );
+
+
+    autoRefresh =
+        setInterval(
+            async function(){
+
+                if(
+                    !result.classList.contains(
+                        "show"
+                    )
+                ){
+
+                    return;
+
+                }
+
+
+                const id =
+                    input.value.trim();
+
+
+                if(!id){
+                    return;
+                }
+
+
+                try{
+
+                    const data =
+                        await getData();
+
+
+                    const transaction =
+                        data.transactions?.find(
+                            t =>
+                                String(t.id)
+                                .toLowerCase()
+                                ===
+                                id.toLowerCase()
+                        );
+
+
+                    if(transaction){
+
+                        showTransaction(
+                            transaction
+                        );
+
+                    }
+
+                }catch(error){
+
+                    console.error(
+                        "Auto refresh error:",
+                        error
+                    );
+
+                }
+
+            },
+            10000
+        );
+
+}
+
+
+startAutoRefresh();
+
+</script>
+
+</body>
+</html>
