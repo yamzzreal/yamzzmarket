@@ -1709,3 +1709,16 @@ footer{
     grid-template-columns:1fr;
   }
     }
+
+footer{margin-top:40px;padding:48px 22px 22px;border-top:1px solid var(--line);background:#040a14}
+.footer-grid{max-width:1240px;margin:auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:45px}
+.footer-brand p{max-width:410px;color:#7186a3;font-size:11px;line-height:1.8;margin-top:14px}
+.footer-grid h3{font-size:12px;margin-bottom:12px}
+.footer-grid>div:not(.footer-brand) a{display:block;color:#7186a3;font-size:11px;margin:9px 0}
+.footer-grid a:hover{color:var(--primary)}
+.footer-bottom{
+  max-width:1240px;margin:35px auto 0;padding-top:18px;
+  border-top:1px solid rgba(255,255,255,.06);
+  display:flex;justify-content:space-between;gap:15px;color:#4f6380;font-size:9px
+}
+.footer-brand-logo .brand-logo{width:45px;height:45px}
