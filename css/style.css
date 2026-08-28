@@ -1805,3 +1805,193 @@ a{
   }
 
 }
+
+/* =========================================================
+   FIX PRODUCT CARD — 2 CARD SEJAJAR DI MOBILE
+   TARUH PALING BAWAH CSS
+========================================================= */
+
+/* Container produk */
+.products{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:10px !important;
+    width:100% !important;
+    align-items:stretch !important;
+}
+
+/* Card */
+.products .product{
+    width:100% !important;
+    min-width:0 !important;
+    max-width:none !important;
+    margin:0 !important;
+    padding:7px !important;
+    border-radius:16px !important;
+    overflow:hidden !important;
+}
+
+/* Gambar produk */
+.products .product-image{
+    width:100% !important;
+    height:145px !important;
+    margin-bottom:9px !important;
+    border-radius:12px !important;
+    overflow:hidden !important;
+}
+
+.products .product-image img{
+    width:100% !important;
+    height:100% !important;
+    display:block !important;
+    object-fit:cover !important;
+}
+
+/* Bagian atas card */
+.products .product-top{
+    display:flex !important;
+    justify-content:space-between !important;
+    align-items:center !important;
+    gap:4px !important;
+    margin:0 2px 8px !important;
+}
+
+/* Badge */
+.products .badge-game,
+.products .badge-ready{
+    font-size:7px !important;
+    padding:5px 6px !important;
+    border-radius:7px !important;
+    white-space:nowrap !important;
+}
+
+/* Judul */
+.products .product-title{
+    padding:0 2px !important;
+    font-size:11px !important;
+    line-height:1.4 !important;
+    min-height:32px !important;
+    overflow:hidden !important;
+}
+
+/* Deskripsi */
+.products .product-desc{
+    padding:0 2px !important;
+    font-size:8px !important;
+    line-height:1.6 !important;
+    min-height:42px !important;
+}
+
+/* Harga */
+.products .price-label{
+    padding:0 2px !important;
+    margin-top:9px !important;
+    font-size:7px !important;
+}
+
+.products .price{
+    padding:0 2px !important;
+    font-size:14px !important;
+    line-height:1.3 !important;
+}
+
+/* Tombol */
+.products .product-buttons{
+    display:flex !important;
+    flex-direction:row !important;
+    gap:6px !important;
+    margin-top:11px !important;
+    width:100% !important;
+}
+
+.products .buy-btn,
+.products .detail-btn{
+    flex:1 1 0 !important;
+    width:50% !important;
+    min-width:0 !important;
+    min-height:37px !important;
+    padding:8px 4px !important;
+    border-radius:9px !important;
+    font-size:9px !important;
+    white-space:nowrap !important;
+}
+
+/* Share */
+.products .share-icon{
+    width:32px !important;
+    height:32px !important;
+    right:7px !important;
+    top:7px !important;
+    border-radius:9px !important;
+    font-size:12px !important;
+}
+
+
+/* =========================================================
+   MOBILE KECIL
+========================================================= */
+
+@media(max-width:600px){
+
+    .products{
+        display:grid !important;
+        grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+        gap:9px !important;
+    }
+
+    .products .product{
+        width:100% !important;
+    }
+
+}
+
+
+/* =========================================================
+   HP SANGAT KECIL
+========================================================= */
+
+@media(max-width:380px){
+
+    .products{
+        grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+        gap:7px !important;
+    }
+
+    .products .product{
+        padding:6px !important;
+        border-radius:14px !important;
+    }
+
+    .products .product-image{
+        height:125px !important;
+        border-radius:10px !important;
+    }
+
+    .products .product-title{
+        font-size:10px !important;
+        min-height:29px !important;
+    }
+
+    .products .product-desc{
+        font-size:7px !important;
+        min-height:38px !important;
+    }
+
+    .products .price{
+        font-size:12px !important;
+    }
+
+    .products .buy-btn,
+    .products .detail-btn{
+        min-height:34px !important;
+        font-size:8px !important;
+        padding:6px 2px !important;
+    }
+
+    .products .badge-game,
+    .products .badge-ready{
+        font-size:6px !important;
+        padding:4px 5px !important;
+    }
+
+}
