@@ -139,12 +139,58 @@ content="width=device-width, initial-scale=1.0">
 
 }
 
-.buy-btn{
+/* ================================
+   BUY BUTTON — DETAIL PRODUK
+   Sama seperti tombol Beli di Index
+================================ */
 
-    margin-top:25px;
+.buy-btn{
+  width:100%;
+  min-height:42px;
+  padding:0 18px;
+  border:0;
+  border-radius:11px;
+  
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  
+  font-family:'Poppins',sans-serif;
+  font-size:11px;
+  font-weight:800;
+  
+  color:#03101c;
+  background:linear-gradient(135deg,#64d4ff,#168cff);
+  
+  cursor:pointer;
+  transition:.2s;
+  
+  /* jangan pakai margin-top 25px */
+  margin-top:13px;
+  
+  box-shadow:0 8px 22px rgba(22,140,255,.15);
 }
 
-@media(max-width:900px){
+.buy-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 28px rgba(22,140,255,.22);
+}
+
+.buy-btn:active{
+  transform:translateY(0);
+}
+
+/* Mobile */
+@media(max-width:600px){
+  .buy-btn{
+    width:100%;
+    min-height:37px;
+    padding:0 12px;
+    border-radius:9px;
+    font-size:9px;
+    margin-top:13px;
+  }
+}
 
 .detail-grid{
 
