@@ -8,8 +8,59 @@ content="width=device-width, initial-scale=1.0">
 
 <title>Detail Produk</title>
 
-<link rel="stylesheet"
-href="css/style.css">
+<meta name="description" content="Yamzz Markets adalah JB Mobile Legend & Free Fire terpercaya. Jual beli akun, dan layanan rekber aman & cepat.">
+
+<meta name="keywords" content="Yamzz Markets, JB Mobile Legend, JB Free Fire, JB ML terpercaya, JB FF terpercaya, jual akun ML, jual akun FF, rekber game">
+
+<meta name="author" content="Yamzz Markets">
+
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="https://yamzzoffc.my.id">
+<link rel="icon" type="image/png" sizes="32x32" href="https://yamzzoffc.my.id/assets/hero.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://yamzzoffc.my.id/assets/hero.png">
+<link rel="apple-touch-icon" href="/assets/hero.png">
+<link rel="manifest" href="/manifest.json">
+<!-- Open Graph -->
+<!-- Open Graph -->
+<meta property="og:title" content="Yamzz Markets – JB ML & FF Terpercaya">
+<meta property="og:description" content="JB Mobile Legend & Free Fire terpercaya. Jual beli akun, dan rekber resmi Yamzz Markets.">
+<meta property="og:image" content="https://yamzzoffc.my.id/assets/hero.png">
+<meta property="og:image:secure_url" content="https://yamzzoffc.my.id/assets/hero.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://yamzzoffc.my.id">
+<meta property="og:site_name" content="Yamzz Markets">
+<meta property="og:type" content="website">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Yamzz Markets – JB ML & FF Terpercaya">
+<meta name="twitter:description" content="JB Mobile Legend & Free Fire terpercaya dari Yamzz Markets.">
+<meta name="twitter:image" content="https://yamzzoffc.my.id/assets/hero.png">
+
+<!-- Fonts -->
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- Schema JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Yamzz Markets",
+  "url": "https://yamzzoffc.my.id",
+  "description": "JB Mobile Legend dan Free Fire terpercaya, jual beli akun, dan rekber.",
+  "sameAs": [
+    "https://instagram.com/yamzz.market",
+    "https://wa.me/62881024256129"
+  ]
+}
+</script>
 
 <style>
 
@@ -234,6 +285,16 @@ Loading...
 
 <script>
 
+function goToPayment(){
+
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    if(!id) return;
+
+    window.location.href = `payment.html?id=${encodeURIComponent(id)}`;
+}
+
 async function loadDetail(){
 
 const params =
@@ -304,11 +365,7 @@ ${product.description}
 
 <button
 class="buy-btn"
-onclick="
-window.open(
-'https://wa.me/${product.whatsapp}'
-)
-">
+onclick="goToPayment()">
 
 Beli Sekarang
 
