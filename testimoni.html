@@ -338,20 +338,18 @@
 <body>
 
 <nav class="navbar">
+  <div class="nav-inner">
+    <a class="brand" href="#home">
+      <div class="brand-logo"><img src="assets/hero.png" alt="Yamzz Market"></div>
+      <div>
+        <strong id="site-name">Yamzz Market</strong>
+        <span>GAME MARKETPLACE</span>
+      </div>
+    </a>
 
-    <div class="logo">
-
-        <img
-        src="assets/hero.png"
-        class="hero-preview">
-
-        <h2>Yamzz Market</h2>
-
-    </div>
-
-<div class="nav-actions">
-
-    <button
+    <div class="nav-actions">
+      <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" aria-label="Ganti tema">🌙</button>
+      <button
     class="theme-btn"
     onclick="
     window.location.href=
@@ -359,15 +357,8 @@
     ">
         🏠
     </button>
-
-    <button
-    class="theme-btn"
-    onclick="toggleTheme()"
-    id="themeBtn">
-        🌙
-    </button>
-
-</div>
+    </div>
+  </div>
 </nav>
 
 <section class="section">
@@ -406,6 +397,38 @@ id="popup">
     id="popupImage">
 
 </div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="brand footer-brand-logo">
+        <div class="brand-logo"><img src="assets/hero.png" alt="Yamzz Market"></div>
+        <div><strong>YAMZZ MARKET</strong><span>GAME MARKETPLACE</span></div>
+      </div>
+      <p>Marketplace game online untuk jual beli akun dengan proses transaksi yang lebih terstruktur.</p>
+    </div>
+
+    <div>
+      <h3>Navigasi</h3>
+      <a href="#home">Home</a>
+      <a href="#products">Produk</a>
+      <a href="testimoni.html">Testimoni</a>
+      <a href="status.html">Cek Pesanan</a>
+    </div>
+
+    <div>
+      <h3>Kontak</h3>
+      <a href="https://wa.me/62881024256129"><i class="fa-brands fa-whatsapp"></i> WhatsApp Admin</a>
+      <a href="https://www.instagram.com/yamzz.market"><i class="fa-brands fa-instagram"></i> Instagram</a>
+      <a href="https://www.tiktok.com/@yamzz.market"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Yamzz Market</span>
+    <span>Built for a better marketplace experience.</span>
+  </div>
+</footer>
 
 <script src="js/jsonbin.js"></script>
 
@@ -540,6 +563,18 @@ async function loadTestimonials(){
 
 }
 
+function toggleMenu(){
+
+document
+.getElementById(
+"mobileMenu"
+)
+.classList.toggle(
+"show"
+);
+
+}
+
 function openPopup(img){
 
     popupImage.src = img;
@@ -557,7 +592,7 @@ function closePopup(){
     );
 
 }
-
+  
 function toggleTheme(){
 
     document.body
@@ -630,4 +665,4 @@ window.addEventListener(
 
 </script>
 </body>
-  </html>
+</html>
