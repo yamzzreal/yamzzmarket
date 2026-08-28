@@ -62,155 +62,157 @@
 
 </head>
 <body>
- <nav class="navbar">
 
-    <div class="logo">
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="brand" href="#home">
+      <div class="brand-logo"><img src="assets/hero.png" alt="Yamzz Market"></div>
+      <div>
+        <strong id="site-name">Yamzz Market</strong>
+        <span>GAME MARKETPLACE</span>
+      </div>
+    </a>
 
-    <img
-        src="assets/hero.png"
-        alt="Preview"
-        class="hero-preview">
-
-        <h2 id="site-name">
-            Yamzz Market
-        </h2>
-
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#products">Produk</a>
+      <a href="testimoni.html">Testimoni</a>
+      <a href="status.html">Cek Pesanan</a>
     </div>
 
     <div class="nav-actions">
-
-<button
-class="theme-btn"
-onclick="toggleTheme()"
-id="themeBtn">
-
-🌙
-
-</button>
-
-        <button
-        class="menu-btn"
-        onclick="toggleMenu()">
-
-            ☰
-
-        </button>
-
+      <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" aria-label="Ganti tema">🌙</button>
+      <button class="icon-btn menu-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
     </div>
-
+  </div>
 </nav>
 
-<div
-id="mobileMenu"
-class="mobile-menu">
-
-    <a href="#home">
-        Home
-    </a>
-
-    <a href="#products">
-        Produk
-    </a>
-
-    <a
-    id="groupLink"
-    href="https://linktr.ee/yamzzmarket">
-        Cek Keaslian
-    </a>
-
+<div id="mobileMenu" class="mobile-menu">
+  <a href="#home">Home</a>
+  <a href="#products">Produk</a>
+  <a href="testimoni.html">Testimoni</a>
+  <a href="status.html">Cek Pesanan</a>
+  <a id="groupLink" href="https://linktr.ee/yamzzmarket">Kontak Admin</a>
 </div>
-<div class="banner-slider">
-    <img src="assets/banner.png" class="slide active">
-    <img src="assets/banner3.png" class="slide">
-    <img src="assets/banner4.png" class="slide">
-</div>
-<div class="slider-dots">
-    <span class="dot active"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-</div>
-      <div class="dashboard-stats">
-                <div>
-                    <h4>200+</h4>
-                    <span>Transaksi</span>
-                </div>
 
-                <div>
-                    <h4>99%</h4>
-                    <span>Kepuasan</span>
-                </div>
+<main id="home">
 
-                <div>
-                    <h4>24/7</h4>
-                    <span>Support</span>
-                </div>
-
-            </div>
-<section class="hero" id="home"><div class="hero-content">
-
+<section class="hero">
+  <div class="hero-content">
     <div class="hero-left">
+      <span class="hero-badge"><i class="fa-solid fa-shield-halved"></i> TRUSTED GAME MARKETPLACE</span>
+      <h1>Temukan Akun Game <span>Impianmu.</span></h1>
+      <p>Marketplace akun game dengan proses pembelian yang lebih rapi, pembayaran QRIS, dan dukungan admin untuk membantu transaksi kamu.</p>
 
-        <span class="hero-badge">
-            TRUSTED GAME MARKETPLACE
-        </span>
-
-        <h1>Temukan Akun Game <span>Impianmu.</span></h1>
-
-        <p>Marketplace akun game dengan proses pembelian yang lebih rapi, pembayaran QRIS, dan dukungan admin untuk membantu transaksi kamu.</p>
-
-        <div class="hero-buttons">
+      <div class="hero-buttons">
         <a href="#products" class="btn btn-primary"><i class="fa-solid fa-bag-shopping"></i> Jelajahi Produk</a>
         <a href="status.html" class="btn btn-outline"><i class="fa-solid fa-magnifying-glass"></i> Cek Pesanan</a>
       </div>
 
+      <div class="hero-trust">
+        <div><i class="fa-solid fa-circle-check"></i><span>Transaksi terdata</span></div>
+        <div><i class="fa-solid fa-bolt"></i><span>Fast response</span></div>
+        <div><i class="fa-solid fa-lock"></i><span>Pembayaran aman</span></div>
+      </div>
     </div>
 
-</div>
-
-</section><section class="section"><h2 class="section-title">
-    Kenapa Memilih Kami?
-</h2>
-
-<div class="features">
-
-    <div class="feature-card">
-        <h3>⚡ Fast Response</h3>
-        <p>Admin aktif dan respons cepat.</p>
+    <div class="hero-visual">
+      <div class="hero-glow"></div>
+      <div class="dashboard-card">
+        <div class="banner-slider">
+          <img src="assets/banner.png" class="slide active" alt="Yamzz Market">
+          <img src="assets/banner3.png" class="slide" alt="Yamzz Market">
+          <img src="assets/banner4.png" class="slide" alt="Yamzz Market">
+        </div>
+        <div class="slider-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+        <div class="dashboard-stats">
+          <div><i class="fa-solid fa-receipt"></i><strong>200+</strong><span>Transaksi</span></div>
+          <div><i class="fa-solid fa-star"></i><strong>99%</strong><span>Kepuasan</span></div>
+          <div><i class="fa-solid fa-headset"></i><strong>24/7</strong><span>Support</span></div>
+        </div>
+      </div>
     </div>
-
-    <div class="feature-card">
-        <h3>🔒 Aman</h3>
-        <p>Transaksi aman dan terpercaya.</p>
-    </div>
-
-    <div class="feature-card">
-        <h3>⭐ Trusted</h3>
-        <p>Sudah melayani banyak pelanggan.</p>
-    </div>
-
-</div>
-
+  </div>
 </section>
-<section class="section"><h2 class="section-title">
-    Produk Terbaru
-</h2>
 
-<input
-type="text"
-class="search"
-placeholder="🔎 Cari produk sesuai spek atau harga...">
+<section class="section intro-section">
+  <div class="section-heading">
+    <span class="eyebrow">KENAPA YAMZZ?</span>
+    <h2>Belanja akun tanpa ribet.</h2>
+    <p>Kami bikin setiap langkah lebih jelas dari memilih produk sampai mengecek status pesanan.</p>
+  </div>
 
-<div id="categoryFilter" class="category-filter"></div>
-
-<div id="products" class="products">
-
-    <div class="loading-card"></div>
-    <div class="loading-card"></div>
-    <div class="loading-card"></div>
-
-</div>
-
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+      <h3>Fast Response</h3>
+      <p>Admin siap membantu ketika kamu membutuhkan informasi atau bantuan transaksi.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+      <h3>Transaksi Terdata</h3>
+      <p>Pesanan memiliki ID transaksi sehingga statusnya bisa dipantau kembali.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fa-solid fa-qrcode"></i></div>
+      <h3>Pembayaran QRIS</h3>
+      <p>Proses pembayaran dibuat sederhana dengan konfirmasi bukti pembayaran.</p>
+    </div>
+  </div>
 </section>
+
+<section class="section product-section" id="products">
+  <div class="section-heading product-heading">
+    <div>
+      <span class="eyebrow">MARKETPLACE</span>
+      <h2>Produk Terbaru</h2>
+      <p>Pilih akun yang sesuai dengan kebutuhan dan budget kamu.</p>
+    </div>
+  </div>
+
+  <div class="search-wrap">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" class="search" placeholder="Cari nama, spek, atau harga..." aria-label="Cari produk">
+  </div>
+
+  <div id="categoryFilter" class="category-filter"></div>
+
+  <div id="products" class="products">
+    <div class="loading-card"></div>
+    <div class="loading-card"></div>
+    <div class="loading-card"></div>
+  </div>
+</section>
+
+<section class="section process-section">
+  <div class="section-heading center">
+    <span class="eyebrow">CARA BELI</span>
+    <h2>Simple. Jelas. Terdata.</h2>
+  </div>
+  <div class="process-grid">
+    <div class="process-card"><span>01</span><i class="fa-solid fa-magnifying-glass"></i><h3>Pilih Produk</h3><p>Lihat detail akun dan pilih produk yang kamu inginkan.</p></div>
+    <div class="process-card"><span>02</span><i class="fa-solid fa-credit-card"></i><h3>Lakukan Pembayaran</h3><p>Ikuti instruksi pembayaran dan kirim bukti transaksi.</p></div>
+    <div class="process-card"><span>03</span><i class="fa-solid fa-receipt"></i><h3>Simpan ID Transaksi</h3><p>Gunakan ID transaksi untuk mengecek perkembangan pesanan.</p></div>
+  </div>
+</section>
+
+<section class="section cta-section">
+  <div class="cta-card">
+    <div>
+      <span class="eyebrow">SUDAH MELAKUKAN PEMBAYARAN?</span>
+      <h2>Cek status pesanan kamu.</h2>
+      <p>Masukkan ID transaksi untuk melihat status terbaru dari pesanan.</p>
+    </div>
+    <a href="status.html" class="btn btn-primary"><i class="fa-solid fa-arrow-right"></i> Cek Status</a>
+  </div>
+</section>
+
+</main>
+
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
@@ -243,8 +245,6 @@ placeholder="🔎 Cari produk sesuai spek atau harga...">
   </div>
 </footer>
 
-<!-- Font Awesome CDN -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="js/jsonbin.js"></script>
 <script>
 const slides = document.querySelectorAll(".slide");
@@ -389,3 +389,4 @@ window.addEventListener(
 </script>
 </body>
   </html>
+  
