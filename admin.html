@@ -5,10 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Admin Panel - Yamzz Market</title>
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<meta name="description" content="Yamzz Markets adalah JB Mobile Legend & Free Fire terpercaya. Jual beli akun, dan layanan rekber aman & cepat.">
 
-    <link rel="stylesheet" href="css/style.css">
+<meta name="keywords" content="Yamzz Markets, JB Mobile Legend, JB Free Fire, JB ML terpercaya, JB FF terpercaya, jual akun ML, jual akun FF, rekber game">
+
+<meta name="author" content="Yamzz Markets">
+
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="https://yamzzoffc.my.id">
+<link rel="icon" type="image/png" sizes="32x32" href="https://yamzzoffc.my.id/assets/hero.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://yamzzoffc.my.id/assets/hero.png">
+<link rel="apple-touch-icon" href="/assets/hero.png">
+<link rel="manifest" href="/manifest.json">
+<!-- Open Graph -->
+<!-- Open Graph -->
+<meta property="og:title" content="Yamzz Markets – JB ML & FF Terpercaya">
+<meta property="og:description" content="JB Mobile Legend & Free Fire terpercaya. Jual beli akun, dan rekber resmi Yamzz Markets.">
+<meta property="og:image" content="https://yamzzoffc.my.id/assets/hero.png">
+<meta property="og:image:secure_url" content="https://yamzzoffc.my.id/assets/hero.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://yamzzoffc.my.id">
+<meta property="og:site_name" content="Yamzz Markets">
+<meta property="og:type" content="website">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Yamzz Markets – JB ML & FF Terpercaya">
+<meta name="twitter:description" content="JB Mobile Legend & Free Fire terpercaya dari Yamzz Markets.">
+<meta name="twitter:image" content="https://yamzzoffc.my.id/assets/hero.png">
+
+<!-- Fonts -->
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- Schema JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Yamzz Markets",
+  "url": "https://yamzzoffc.my.id",
+  "description": "JB Mobile Legend dan Free Fire terpercaya, jual beli akun, dan rekber.",
+  "sameAs": [
+    "https://instagram.com/yamzz.market",
+    "https://wa.me/62881024256129"
+  ]
+}
+</script>
     
 <style>
 html{
@@ -664,6 +713,9 @@ background-position:-200% 0;
 
 }
     
+
+.transaction-card{background:#102347;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:16px;margin-bottom:14px}.transaction-top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.transaction-id{font-family:monospace;color:#4cc9ff;font-size:12px}.trx-status{padding:7px 10px;border-radius:99px;font-size:11px;font-weight:800}.trx-pending{background:#f59e0b22;color:#fbbf24}.trx-success{background:#22c55e22;color:#4ade80}.trx-rejected{background:#ef444422;color:#f87171}.transaction-grid{display:grid;grid-template-columns:1fr 230px;gap:16px}.transaction-row{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px}.transaction-row b{float:right;text-align:right;max-width:65%}.transaction-proof{background:#061226;border-radius:14px;overflow:hidden}.transaction-proof img{width:100%;max-height:300px;object-fit:contain;display:block}.transaction-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.transaction-note{flex:1;min-width:180px;background:#061226;border:1px solid rgba(255,255,255,.08);color:#fff;border-radius:10px;padding:10px;outline:none}.empty-trx{padding:30px;text-align:center;color:#9db6ff;background:#102347;border-radius:16px}@media(max-width:800px){.transaction-grid{grid-template-columns:1fr}.transaction-row b{float:none;display:block;text-align:left;max-width:100%;margin-top:3px}}
+
 .page{
     display:none;
 }
@@ -681,6 +733,11 @@ background-position:-200% 0;
 <a onclick="showPage('dashboard', this)">
     <i class="fa-solid fa-house"></i>
     <span>Dashboard</span>
+</a>
+
+<a onclick="showPage('transaksi', this)">
+    <i class="fa-solid fa-money-check-dollar"></i>
+    <span>Transaksi</span>
 </a>
 
 <a onclick="showPage('produk', this)">
@@ -752,6 +809,25 @@ background-position:-200% 0;
 </div>
 
 </div>
+<div id="transaksi" class="page">
+<div class="admin-card">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+<h2>Transaksi Pembayaran</h2>
+<button class="edit-btn" onclick="loadTransactions()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+</div>
+<div class="dashboard-stats" style="margin-top:20px">
+<div class="stat-card"><div class="stat-left"><div class="stat-label">Semua</div><div class="stat-number" id="trxTotal">0</div></div><div class="stat-icon"><i class="fa-solid fa-receipt"></i></div></div>
+<div class="stat-card"><div class="stat-left"><div class="stat-label">Pending</div><div class="stat-number" id="trxPending">0</div></div><div class="stat-icon"><i class="fa-solid fa-clock"></i></div></div>
+<div class="stat-card"><div class="stat-left"><div class="stat-label">Dana Masuk</div><div class="stat-number" id="trxSuccess">0</div></div><div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div></div>
+<div class="stat-card"><div class="stat-left"><div class="stat-label">Ditolak</div><div class="stat-number" id="trxRejected">0</div></div><div class="stat-icon"><i class="fa-solid fa-circle-xmark"></i></div></div>
+</div>
+<div style="display:flex;gap:8px;overflow:auto;margin-bottom:18px">
+<button class="edit-btn" onclick="setTransactionFilter('all')">Semua</button><button class="edit-btn" onclick="setTransactionFilter('pending')">Pending</button><button class="edit-btn" onclick="setTransactionFilter('success')">Berhasil</button><button class="delete-btn" onclick="setTransactionFilter('rejected')">Ditolak</button>
+</div>
+<div id="transactionList"></div>
+</div>
+</div>
+
 <!-- Pengaturan Website -->
 <div id="setting" class="page">
 <div class="admin-card">
@@ -1162,6 +1238,3 @@ showPage("dashboard");
     </div>
 </body>
     </html>
-
-
-    
